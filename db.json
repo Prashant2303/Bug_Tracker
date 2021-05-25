@@ -7,7 +7,7 @@
       "status": "Open",
       "cdate": "12/02/2021",
       "rdate": "",
-      "viewed": 21
+      "viewed": 14
     },
     {
       "id": 2,
@@ -16,7 +16,7 @@
       "cdate": "12/02/2021",
       "rdate": "03/12/2021",
       "status": "Closed",
-      "viewed": 8
+      "viewed": 16
     },
     {
       "id": 3,
@@ -34,7 +34,7 @@
       "cdate": "12/02/2021",
       "rdate": "",
       "id": 4,
-      "viewed": 3
+      "viewed": 33
     },
     {
       "desc": "payment issue",

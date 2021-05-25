@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{ useState } from 'react'
 import { Formik, Form } from 'formik'
 import * as Yup from 'yup'
 import TextWrapper from './TextWrapper';
@@ -18,6 +18,8 @@ const Signup = () => {
     const history = useHistory();
     const userList = useSelector(state=>state.user.list);
     console.log(userList);
+
+    const [submitting, setSubmitting] = useState(false)
 
     return (
         <Paper className={classes.paper} xs={12} elevation={5}>
@@ -45,7 +47,7 @@ const Signup = () => {
                         onSubmit={(values) => {
                             // alert(JSON.stringify(values))
                             // console.log(values)
-
+                            setSubmitting(true)
                             let alreadyExist = false;
                             for(let i=0;i<userList.length;i++)
                             {
@@ -62,7 +64,7 @@ const Signup = () => {
                             }
                             else
                             {
-                                values.id = userList[userList.length-1].id + 1;
+                                values.id = userList==null?0:userList[userList.length-1].id + 1;
                                 axios.post(`${base_url}/users`,values).then(
                                     (response) => {
                                         console.log('Before Add '+ JSON.stringify(userList));
@@ -71,11 +73,13 @@ const Signup = () => {
                                         localStorage.setItem('user',true);
                                         dispatch(login(alreadyExist));
 
+                                        setSubmitting(false)
                                         alert('User Added Succesfully')
                                         history.push("/");
                                         // console.log('After Add '+ JSON.stringify(userInStore));
                                     },
                                     (error) => {
+                                        setSubmitting(false)
                                         alert('User could not be added')
                                     }
                                 )
@@ -108,8 +112,8 @@ const Signup = () => {
                                 <TextWrapper name='pass' label='Password' type="password"/>
                             </Grid>
                             <Grid item xs={12}>
-                                <ButtonWrapper>
-                                    Sign Up
+                                <ButtonWrapper disabled={submitting}>
+                                    {submitting==true?'Signing Up':'Sign Up'}
                                 </ButtonWrapper>
                             </Grid>
                             {/* <Button variant='contained' color='primary' type='submit' fullWidth=true >Sign Up</Button> */}

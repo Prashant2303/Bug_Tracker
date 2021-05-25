@@ -83,7 +83,7 @@ function App() {
         <NavLink exact activeClassName="active" style={{marginLeft:20}} to="/issues">Issues</NavLink>
         <NavLink exact activeClassName="active" style={{marginLeft:20}} to="/signup">Sign Up</NavLink> */}
         <Route path='/' exact > <AllIssues /> </Route>
-        <Route path='/about' exact > {isLoggedIn? <About />: <Unauthorized />}</Route>
+        <Route path='/about' exact > <About /> </Route>
         <Route path='/issues' exact > <AllIssues /> </Route>
         <Route path='/addIssue' exact > {isLoggedIn? <AddIssueFormik />: <Unauthorized />} </Route>
         <Route path='/issueDetails' exact><IssueDetail /></Route>

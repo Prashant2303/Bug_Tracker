@@ -1,18 +1,39 @@
-import React from 'react'
+import React,{useState} from 'react'
 import { Container, Grid } from '@material-ui/core';
 import { Bar } from 'react-chartjs-2';
 import { useSelector } from 'react-redux';
+import TextWrapper from './TextWrapper'
+import { Formik, Form } from 'formik'
+import * as Yup from 'yup';
+
+function sortOnViews(a,b) //https://www.sitepoint.com/sort-an-array-of-objects-in-javascript/
+{
+    let issue1 = a.viewed;
+    let issue2 = b.viewed;
+
+    let comparator = 0;
+    if(issue1<issue2)
+      comparator =1;
+    else
+      comparator = -1;
+
+    return comparator;
+}
 
 const VerticalBar = () => {
     const issues = useSelector(state=>state.handler.list)
     
+    let sortedIssues = [...issues].sort(sortOnViews)
+    console.log(sortedIssues);
+
+    const [currentTop, setCurrentTop] = useState(issues.length)
+    // console.log(issues.length+" "+currentTop)
     let ids = [],vcount=[]
-    issues.forEach(issue=>{
-        ids.push(issue.id);
-        vcount.push(issue.viewed);
-    })
-    // console.log(ids);
-    // console.log(vcount);
+    for(let i=0;i<currentTop;i++)
+    {
+      ids.push(sortedIssues[i].id);
+      vcount.push(sortedIssues[i].viewed);
+    }
     
     const data = {
 
@@ -46,12 +67,34 @@ const VerticalBar = () => {
     };
     return(
         <Container>
-            <Grid container xs={12}>
-                <div className='header'>
-                <h1 className='title'>Vertical Bar Chart</h1>
+            <Grid container>
+              <Grid container direction="row" justify="space-between" alignItems="center" > 
+
+                <Grid item>
+                  <h2 style={{fontWeight:'500'}}>Most Viewed Issues</h2>
+                </Grid>
                 
-                </div>
+                <Grid item>
+                    <Formik
+                      initialValues={{
+                        top:''
+                      }}
+                      validationSchema={Yup.object({
+                        top: Yup.number('Please enter a number').max(sortedIssues.length, `There are only ${sortedIssues.length} issues in the system`)
+                      })}
+                      onSubmit={(values)=>{
+                        setCurrentTop(values.top)
+                      }}
+                      >
+                      <Form>
+                        <TextWrapper name='top' label='Limit view to top ?' size='small'/>
+                      </Form>
+                    </Formik>
+                </Grid>
+              </Grid>
+              <Grid container>
                 <Bar data={data} height={200} width={600} options={options} />
+              </Grid>
             </Grid>
         </Container>
     )

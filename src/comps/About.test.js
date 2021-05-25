@@ -13,6 +13,7 @@ describe('About', () => {
     //   posts: []
     // }
     const wrapper = shallow(<About />)
+    // console.log(wrapper.debug())
     expect(wrapper.find(Grid).length).toEqual(3)
   })
 })

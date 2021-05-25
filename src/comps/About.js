@@ -3,7 +3,7 @@ import { Container, Grid } from '@material-ui/core'
 const About = () => {
     return(
         <Container>
-            <Grid container spacing='2' xs={12}>
+            <Grid container spacing='2'>
                 <Grid item xs={12}>
                     <h1 style={{fontWeight:'normal', color:'darkgray'}}>About</h1>
                 </Grid>

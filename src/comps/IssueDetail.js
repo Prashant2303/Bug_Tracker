@@ -6,6 +6,7 @@ import { Container, Button, Grid } from '@material-ui/core'
 const IssueDetail = () => {
     
     const issue = useLocation().state;
+    console.log('In Details '+JSON.stringify(issue))
     const style = {fontWeight:'bold'}
     return(
         

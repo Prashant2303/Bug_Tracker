@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{ useState } from 'react'
 import useStyles from './FormStyle';
 import { Grid, Paper, Container } from '@material-ui/core';
 import { Formik, Form } from 'formik'
@@ -19,6 +19,8 @@ const Login = () => {
     const userList = useSelector(state=>state.user.list);
     console.log(userList);
 
+    const [submitting, setSubmitting] = useState(false)
+
     return (
         <Paper className={classes.paper} xs={12} elevation={5}>
 
@@ -36,6 +38,7 @@ const Login = () => {
                         })}
                         onSubmit={ values => {
                             // alert(JSON.stringify(userList)+' '+JSON.stringify(values))
+                            setSubmitting(true)
                             let result = false;
                             for(let i=0;i<userList.length;i++)
                             {
@@ -50,10 +53,12 @@ const Login = () => {
                             {
                                 localStorage.setItem('user',true);
                                 dispatch(login(result));
+                                setSubmitting(false)
                                 history.push("/");
                             }
                             else
                             {
+                                setSubmitting(false)
                                 alert('Failed');
                             }
                         }}
@@ -70,7 +75,7 @@ const Login = () => {
 
                             <Grid item xs={12}>
                                 <ButtonWrapper>
-                                    Log In
+                                    {submitting==true?'Logging In':'Log In'}
                                 </ButtonWrapper>
                             </Grid>
                         </Grid>

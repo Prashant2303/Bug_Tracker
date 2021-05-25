@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{ useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
@@ -9,15 +9,19 @@ import SelectWrapper from './SelectWrapper'
 import { Paper, Grid, Container } from '@material-ui/core';
 import useStyles from './FormStyle';
 import ButtonWrapper from './ButtonWrapper';
+import { useHistory } from 'react-router-dom';
 
 const EditIssue = () => {
 
     const classes = useStyles();
     const issueToEdit = useLocation().state;
+    const history = useHistory()
+
+    const [submitting, setSubmitting] = useState(false)
 
     return (
         <Paper className={classes.paper} xs={12} elevation={5}>
-            <h2>Update issue details</h2>
+            <h2 className={classes.heading}>Update issue details</h2>
             <Grid item xs={12}>
                 <Container className={classes.container}>
                     <Formik
@@ -37,13 +41,17 @@ const EditIssue = () => {
                         })}
                         onSubmit={(values) => {
 
+                            setSubmitting(true)
                             values.id = issueToEdit.id;
 
                             axios.put(`${base_url}/issues/${issueToEdit.id}`, values).then(
                                 (response) => {
+                                    setSubmitting(false)
                                     alert('Issue Updated')
+                                    history.push('/')
                                 },
                                 (error) => {
+                                    setSubmitting(false)
                                     alert('Issue could not be Updated')
                                 }
                             )
@@ -78,7 +86,7 @@ const EditIssue = () => {
                                 </Grid>
                             
                                 <Grid item xs={12}>
-                                    <ButtonWrapper>Update</ButtonWrapper>
+                                    <ButtonWrapper disabled={submitting}>{ submitting==true?'Updating':'Update' }</ButtonWrapper>
                                 </Grid>
 
                             </Grid>

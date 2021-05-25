@@ -1,4 +1,4 @@
-import React from 'react';
+import React ,{useEffect, useState} from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
@@ -10,6 +10,7 @@ import SelectWrapper from './SelectWrapper'
 import { Paper, Grid, Container} from '@material-ui/core';
 import useStyles from './FormStyle';
 import ButtonWrapper from './ButtonWrapper';
+import { Prompt, useHistory } from 'react-router-dom'
 
 const AddIssueFormik = () => {
 
@@ -17,13 +18,24 @@ const AddIssueFormik = () => {
 
     const dispatch = useDispatch();
     const listInStore = useSelector(state => state.handler.list);
-    
+    const history = useHistory();
+    // useEffect(()=>{
+
+    //     //https://dev.to/robmarshall/how-to-use-componentwillunmount-with-functional-components-in-react-2a5g
+    //     return () => {
+            
+    //         // alert('You Sure ?')
+    //         console.log('Unmounting')
+    //     }
+    // },[])
     //Error on page reload
     // console.log('ListInStore '+JSON.stringify(listInStore));
-    
+    const [changed, setChanged] = useState(true)
+    const [submitting, setSubmitting] = useState(false)
     return (
         <Paper className={classes.paper} xs={12} elevation={5}>
-            <h2>Enter issue details</h2>
+            <Prompt when={changed} message="Are you sure you want to leave?" />
+            <h2 className={classes.heading}> Enter issue details </h2>
             <Grid item xs={12}>
                 <Container className={classes.container}>
                     <Formik
@@ -44,17 +56,24 @@ const AddIssueFormik = () => {
                         })}
                         onSubmit={(values) => {
                             console.log(JSON.stringify(values));
-                            let lastId = listInStore[listInStore.length - 1].id;
+                            // console.log('This is setSubmitting '+ setSubmitting +' yeah'+ isSubmitting);
+                            setSubmitting(true);
+                            
+                            let lastId = listInStore==null ? 0 : listInStore[listInStore.length - 1].id;
                             values.id = lastId + 1;
-                            values.vcount = 0;
+                            values.viewed = 1;
                             axios.post(`${base_url}/issues`, values).then(
                                 (response) => {
-                                    alert('Issue Added')
                                     // console.log('Before Add '+ JSON.stringify(listInStore));
                                     dispatch(add(values));
+                                    setChanged(false);
+                                    setSubmitting(false);
+                                    alert('Issue Added')
+                                    history.push('/');
                                     // console.log('After Add '+ JSON.stringify(listInStore));
                                 },
                                 (error) => {
+                                    setSubmitting(false);
                                     alert('Issue could not be added')
                                 }
                             )
@@ -85,7 +104,8 @@ const AddIssueFormik = () => {
                                 </Grid>
                             
                                 <Grid item xs={12}>
-                                    <ButtonWrapper>Add</ButtonWrapper>
+                                    <ButtonWrapper disabled={submitting}> {submitting==true?'Adding':'Add'} </ButtonWrapper>
+                                    {/* <ButtonWrapper>Add</ButtonWrapper> */}
                                 </Grid>
 
                             </Grid>

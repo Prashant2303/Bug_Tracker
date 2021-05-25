@@ -75,7 +75,7 @@ export default function IssuesList() {
       <Grid container direction="row" justify="space-between" alignItems="center" spacing={1} style={{marginBottom:'1em'}}>
         
         <Grid item xs={12} md={1}>
-          <h3>Filters</h3>
+          <h3 style={{fontWeight:'500'}}>Filters</h3>
         </Grid>
         {/* <h5>Sort</h5> */}
         <Grid item xs={6} sm={4} md={1}>
