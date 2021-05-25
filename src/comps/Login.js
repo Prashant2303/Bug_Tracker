@@ -59,7 +59,7 @@ const Login = () => {
                             else
                             {
                                 setSubmitting(false)
-                                alert('Failed');
+                                alert('Invalid Username or Password');
                             }
                         }}
                     >
@@ -75,7 +75,7 @@ const Login = () => {
 
                             <Grid item xs={12}>
                                 <ButtonWrapper>
-                                    {submitting==true?'Logging In':'Log In'}
+                                    {submitting===true?'Logging In':'Log In'}
                                 </ButtonWrapper>
                             </Grid>
                         </Grid>

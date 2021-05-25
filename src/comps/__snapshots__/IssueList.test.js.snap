@@ -3331,7 +3331,7 @@ exports[`When Issues array passed has 2 issues snapshot with 2 issues 1`] = `
                                     <WithStyles(ForwardRef(CardActions))>
                                       <WithStyles(ForwardRef(IconButton))
                                         aria-label="Edit"
-                                        disabled={false}
+                                        onClick={[Function]}
                                       >
                                         <Link
                                           to={
@@ -3356,7 +3356,6 @@ exports[`When Issues array passed has 2 issues snapshot with 2 issues 1`] = `
                                       </WithStyles(ForwardRef(IconButton))>
                                       <WithStyles(ForwardRef(IconButton))
                                         aria-label="Delete"
-                                        disabled={false}
                                         onClick={[Function]}
                                       >
                                         <Memo
@@ -3365,7 +3364,6 @@ exports[`When Issues array passed has 2 issues snapshot with 2 issues 1`] = `
                                       </WithStyles(ForwardRef(IconButton))>
                                       <WithStyles(ForwardRef(IconButton))
                                         aria-label="Details"
-                                        disabled={false}
                                         onClick={[Function]}
                                       >
                                         <Link
@@ -3398,7 +3396,7 @@ exports[`When Issues array passed has 2 issues snapshot with 2 issues 1`] = `
                                       <WithStyles(ForwardRef(CardActions))>
                                         <WithStyles(ForwardRef(IconButton))
                                           aria-label="Edit"
-                                          disabled={false}
+                                          onClick={[Function]}
                                         >
                                           <Link
                                             to={
@@ -3423,7 +3421,6 @@ exports[`When Issues array passed has 2 issues snapshot with 2 issues 1`] = `
                                         </WithStyles(ForwardRef(IconButton))>
                                         <WithStyles(ForwardRef(IconButton))
                                           aria-label="Delete"
-                                          disabled={false}
                                           onClick={[Function]}
                                         >
                                           <Memo
@@ -3432,7 +3429,6 @@ exports[`When Issues array passed has 2 issues snapshot with 2 issues 1`] = `
                                         </WithStyles(ForwardRef(IconButton))>
                                         <WithStyles(ForwardRef(IconButton))
                                           aria-label="Details"
-                                          disabled={false}
                                           onClick={[Function]}
                                         >
                                           <Link
@@ -3547,7 +3543,7 @@ exports[`When Issues array passed has 2 issues snapshot with 2 issues 1`] = `
                                             >
                                               <WithStyles(ForwardRef(IconButton))
                                                 aria-label="Edit"
-                                                disabled={false}
+                                                onClick={[Function]}
                                               >
                                                 <ForwardRef(IconButton)
                                                   aria-label="Edit"
@@ -3564,7 +3560,7 @@ exports[`When Issues array passed has 2 issues snapshot with 2 issues 1`] = `
                                                       "sizeSmall": "MuiIconButton-sizeSmall",
                                                     }
                                                   }
-                                                  disabled={false}
+                                                  onClick={[Function]}
                                                 >
                                                   <WithStyles(ForwardRef(ButtonBase))
                                                     aria-label="Edit"
@@ -3572,6 +3568,7 @@ exports[`When Issues array passed has 2 issues snapshot with 2 issues 1`] = `
                                                     className="MuiIconButton-root"
                                                     disabled={false}
                                                     focusRipple={true}
+                                                    onClick={[Function]}
                                                   >
                                                     <ForwardRef(ButtonBase)
                                                       aria-label="Edit"
@@ -3586,12 +3583,14 @@ exports[`When Issues array passed has 2 issues snapshot with 2 issues 1`] = `
                                                       }
                                                       disabled={false}
                                                       focusRipple={true}
+                                                      onClick={[Function]}
                                                     >
                                                       <button
                                                         aria-label="Edit"
                                                         className="MuiButtonBase-root MuiIconButton-root"
                                                         disabled={false}
                                                         onBlur={[Function]}
+                                                        onClick={[Function]}
                                                         onDragLeave={[Function]}
                                                         onFocus={[Function]}
                                                         onKeyDown={[Function]}
@@ -3706,7 +3705,6 @@ exports[`When Issues array passed has 2 issues snapshot with 2 issues 1`] = `
                                               </WithStyles(ForwardRef(IconButton))>
                                               <WithStyles(ForwardRef(IconButton))
                                                 aria-label="Delete"
-                                                disabled={false}
                                                 onClick={[Function]}
                                               >
                                                 <ForwardRef(IconButton)
@@ -3724,7 +3722,6 @@ exports[`When Issues array passed has 2 issues snapshot with 2 issues 1`] = `
                                                       "sizeSmall": "MuiIconButton-sizeSmall",
                                                     }
                                                   }
-                                                  disabled={false}
                                                   onClick={[Function]}
                                                 >
                                                   <WithStyles(ForwardRef(ButtonBase))
@@ -3843,7 +3840,6 @@ exports[`When Issues array passed has 2 issues snapshot with 2 issues 1`] = `
                                               </WithStyles(ForwardRef(IconButton))>
                                               <WithStyles(ForwardRef(IconButton))
                                                 aria-label="Details"
-                                                disabled={false}
                                                 onClick={[Function]}
                                               >
                                                 <ForwardRef(IconButton)
@@ -3861,7 +3857,6 @@ exports[`When Issues array passed has 2 issues snapshot with 2 issues 1`] = `
                                                       "sizeSmall": "MuiIconButton-sizeSmall",
                                                     }
                                                   }
-                                                  disabled={false}
                                                   onClick={[Function]}
                                                 >
                                                   <WithStyles(ForwardRef(ButtonBase))
@@ -4465,7 +4460,7 @@ exports[`When Issues array passed has 2 issues snapshot with 2 issues 1`] = `
                                     <WithStyles(ForwardRef(CardActions))>
                                       <WithStyles(ForwardRef(IconButton))
                                         aria-label="Edit"
-                                        disabled={false}
+                                        onClick={[Function]}
                                       >
                                         <Link
                                           to={
@@ -4490,7 +4485,6 @@ exports[`When Issues array passed has 2 issues snapshot with 2 issues 1`] = `
                                       </WithStyles(ForwardRef(IconButton))>
                                       <WithStyles(ForwardRef(IconButton))
                                         aria-label="Delete"
-                                        disabled={false}
                                         onClick={[Function]}
                                       >
                                         <Memo
@@ -4499,7 +4493,6 @@ exports[`When Issues array passed has 2 issues snapshot with 2 issues 1`] = `
                                       </WithStyles(ForwardRef(IconButton))>
                                       <WithStyles(ForwardRef(IconButton))
                                         aria-label="Details"
-                                        disabled={false}
                                         onClick={[Function]}
                                       >
                                         <Link
@@ -4532,7 +4525,7 @@ exports[`When Issues array passed has 2 issues snapshot with 2 issues 1`] = `
                                       <WithStyles(ForwardRef(CardActions))>
                                         <WithStyles(ForwardRef(IconButton))
                                           aria-label="Edit"
-                                          disabled={false}
+                                          onClick={[Function]}
                                         >
                                           <Link
                                             to={
@@ -4557,7 +4550,6 @@ exports[`When Issues array passed has 2 issues snapshot with 2 issues 1`] = `
                                         </WithStyles(ForwardRef(IconButton))>
                                         <WithStyles(ForwardRef(IconButton))
                                           aria-label="Delete"
-                                          disabled={false}
                                           onClick={[Function]}
                                         >
                                           <Memo
@@ -4566,7 +4558,6 @@ exports[`When Issues array passed has 2 issues snapshot with 2 issues 1`] = `
                                         </WithStyles(ForwardRef(IconButton))>
                                         <WithStyles(ForwardRef(IconButton))
                                           aria-label="Details"
-                                          disabled={false}
                                           onClick={[Function]}
                                         >
                                           <Link
@@ -4681,7 +4672,7 @@ exports[`When Issues array passed has 2 issues snapshot with 2 issues 1`] = `
                                             >
                                               <WithStyles(ForwardRef(IconButton))
                                                 aria-label="Edit"
-                                                disabled={false}
+                                                onClick={[Function]}
                                               >
                                                 <ForwardRef(IconButton)
                                                   aria-label="Edit"
@@ -4698,7 +4689,7 @@ exports[`When Issues array passed has 2 issues snapshot with 2 issues 1`] = `
                                                       "sizeSmall": "MuiIconButton-sizeSmall",
                                                     }
                                                   }
-                                                  disabled={false}
+                                                  onClick={[Function]}
                                                 >
                                                   <WithStyles(ForwardRef(ButtonBase))
                                                     aria-label="Edit"
@@ -4706,6 +4697,7 @@ exports[`When Issues array passed has 2 issues snapshot with 2 issues 1`] = `
                                                     className="MuiIconButton-root"
                                                     disabled={false}
                                                     focusRipple={true}
+                                                    onClick={[Function]}
                                                   >
                                                     <ForwardRef(ButtonBase)
                                                       aria-label="Edit"
@@ -4720,12 +4712,14 @@ exports[`When Issues array passed has 2 issues snapshot with 2 issues 1`] = `
                                                       }
                                                       disabled={false}
                                                       focusRipple={true}
+                                                      onClick={[Function]}
                                                     >
                                                       <button
                                                         aria-label="Edit"
                                                         className="MuiButtonBase-root MuiIconButton-root"
                                                         disabled={false}
                                                         onBlur={[Function]}
+                                                        onClick={[Function]}
                                                         onDragLeave={[Function]}
                                                         onFocus={[Function]}
                                                         onKeyDown={[Function]}
@@ -4840,7 +4834,6 @@ exports[`When Issues array passed has 2 issues snapshot with 2 issues 1`] = `
                                               </WithStyles(ForwardRef(IconButton))>
                                               <WithStyles(ForwardRef(IconButton))
                                                 aria-label="Delete"
-                                                disabled={false}
                                                 onClick={[Function]}
                                               >
                                                 <ForwardRef(IconButton)
@@ -4858,7 +4851,6 @@ exports[`When Issues array passed has 2 issues snapshot with 2 issues 1`] = `
                                                       "sizeSmall": "MuiIconButton-sizeSmall",
                                                     }
                                                   }
-                                                  disabled={false}
                                                   onClick={[Function]}
                                                 >
                                                   <WithStyles(ForwardRef(ButtonBase))
@@ -4977,7 +4969,6 @@ exports[`When Issues array passed has 2 issues snapshot with 2 issues 1`] = `
                                               </WithStyles(ForwardRef(IconButton))>
                                               <WithStyles(ForwardRef(IconButton))
                                                 aria-label="Details"
-                                                disabled={false}
                                                 onClick={[Function]}
                                               >
                                                 <ForwardRef(IconButton)
@@ -4995,7 +4986,6 @@ exports[`When Issues array passed has 2 issues snapshot with 2 issues 1`] = `
                                                       "sizeSmall": "MuiIconButton-sizeSmall",
                                                     }
                                                   }
-                                                  disabled={false}
                                                   onClick={[Function]}
                                                 >
                                                   <WithStyles(ForwardRef(ButtonBase))

@@ -35,7 +35,7 @@ const AddIssueFormik = () => {
     return (
         <Paper className={classes.paper} xs={12} elevation={5}>
             <Prompt when={changed} message="Are you sure you want to leave?" />
-            <h2 className={classes.heading}> Enter issue details </h2>
+            <h2 className={classes.heading}>Enter issue details</h2>
             <Grid item xs={12}>
                 <Container className={classes.container}>
                     <Formik

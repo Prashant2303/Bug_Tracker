@@ -40,19 +40,45 @@ const Issue = ({ issue, displayProps }) => {
         dispatch(del(id));
     }
 
-    const handleClick = () => {
-        // console.log(JSON.stringify(issue))
-        let newIssue = {...issue};
-        newIssue.viewed = issue.viewed+1;
-        // console.log(JSON.stringify(newIssue))
-        axios.put(`${base_url}/issues/${issue.id}`, newIssue).then(
-            (response) => {
-                console.log('Issue Count Updated')
-            },
-            (error) => {
-                alert('Issue count not Updated')
-            }
-        )
+    const handleDetails = (e) => {
+        if(isLoggedIn===false)
+        {
+            e.preventDefault();
+            alert('Login Required')
+        }
+        else
+        {
+            // console.log(JSON.stringify(issue))
+            let newIssue = {...issue};
+            newIssue.viewed = issue.viewed+1;
+            // console.log(JSON.stringify(newIssue))
+            axios.put(`${base_url}/issues/${issue.id}`, newIssue).then(
+                (response) => {
+                    console.log('Issue Count Updated')
+                },
+                (error) => {
+                    alert('Issue count not Updated')
+                }
+            )
+        }
+    }
+    const handleEdit = (e) => {
+        if(isLoggedIn===false)
+        {
+            e.preventDefault();
+            alert('Login Required')
+        }
+    }
+    const handleDelete = (e) => {
+        if(isLoggedIn===false)
+        {
+            e.preventDefault();
+            alert('Login Required')
+        }
+        else
+        {
+            delIssue(issue.id)
+        }
     }
     return (
         <Grid item xs={12} sm={8} md={5}>
@@ -63,17 +89,17 @@ const Issue = ({ issue, displayProps }) => {
                 action={
                     <CardActions>
 
-                        <IconButton aria-label="Edit" disabled={isLoggedIn?false:true}>
+                        <IconButton aria-label="Edit" onClick={handleEdit}>
                             <Link to={{ pathname: '/editIssue', state: issue }}>
                                 <EditRounded color={isLoggedIn?'primary':'disabled'}/>
                             </Link>
                         </IconButton>
 
-                        <IconButton aria-label="Delete"  disabled={isLoggedIn?false:true} onClick={()=>{delIssue(issue.id)}}>
+                        <IconButton aria-label="Delete" onClick={handleDelete}>
                             <DeleteForeverRounded color={isLoggedIn?'error':'disabled'} />
                         </IconButton>
                         
-                        <IconButton aria-label="Details" disabled={isLoggedIn?false:true} onClick={handleClick}>
+                        <IconButton aria-label="Details" onClick={handleDetails}>
                             <Link to={{ pathname: '/issueDetails', state: issue }} >
                                 <LaunchRounded color={isLoggedIn?'primary':'disabled'} />
                             </Link>
