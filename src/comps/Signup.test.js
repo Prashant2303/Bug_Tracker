@@ -3,8 +3,7 @@ import { mount } from 'enzyme'
 import Signup from './Signup'
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
-import { BrowserRouter as Router, Route } from 'react-router-dom'
-import { Grid } from '@material-ui/core'
+import { BrowserRouter as Router } from 'react-router-dom'
 
 const mockStore = configureStore([]);
 
@@ -25,7 +24,6 @@ describe('Signup', ()=>{
     })
 
     it('renders "Create your Account" as Heading', () => {
-        //   console.log(wrapper.debug())
         expect(wrapper.find('h3').text()).toEqual('Create your Account')
       });
 })

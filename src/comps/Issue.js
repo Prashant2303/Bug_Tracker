@@ -89,8 +89,8 @@ const Issue = ({ issue, displayProps }) => {
                 action={
                     <CardActions>
 
-                        <IconButton aria-label="Edit" onClick={handleEdit}>
-                            <Link to={{ pathname: '/editIssue', state: issue }}>
+                        <IconButton aria-label="Edit">
+                            <Link to={{ pathname: '/editIssue', state: issue }} onClick={handleEdit}>
                                 <EditRounded color={isLoggedIn?'primary':'disabled'}/>
                             </Link>
                         </IconButton>
@@ -99,8 +99,8 @@ const Issue = ({ issue, displayProps }) => {
                             <DeleteForeverRounded color={isLoggedIn?'error':'disabled'} />
                         </IconButton>
                         
-                        <IconButton aria-label="Details" onClick={handleDetails}>
-                            <Link to={{ pathname: '/issueDetails', state: issue }} >
+                        <IconButton aria-label="Details">
+                            <Link to={{ pathname: '/issueDetails', state: issue }} onClick={handleDetails}>
                                 <LaunchRounded color={isLoggedIn?'primary':'disabled'} />
                             </Link>
                         </IconButton>
