@@ -25,6 +25,7 @@ const Signup = () => {
         <Paper className={classes.paper} xs={12} elevation={5}>
                 
             <h3 className={classes.heading}>Create your Account</h3>
+            
             <Grid item xs={12}>
                 <Container className={classes.container}>
                     <Formik
@@ -40,7 +41,7 @@ const Signup = () => {
                             fname: Yup.string().max(15, 'Must be 15 characters or less').required('Required'),
                             lname: Yup.string().max(15, 'Must be 20 characters or less').required('Required'),
                             email: Yup.string().email('Invalid email address').required('Required'),
-                            phone: Yup.string().matches(/^[6-9]\d{9}$/,'Invalid Phone Number').required('Required'),
+                            phone: Yup.string().matches(/^[6-9]\d{9}$/,'Invalid Phone Number'),
                             pass: Yup.string().min(8,'Must be 8 characters at least').required('Required'),
                             location: Yup.string()
                         })}
@@ -123,6 +124,7 @@ const Signup = () => {
 
                 </Container>
             </Grid>
+            <h5 className={classes.heading}>Avoid giving personal information</h5>
         </Paper>
 
     )

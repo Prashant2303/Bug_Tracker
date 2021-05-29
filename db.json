@@ -57,22 +57,13 @@
       "location": null
     },
     {
-      "fname": "Prashant",
-      "lname": "Kumar",
-      "email": "pracer23031997@gmail.com",
-      "phone": "9304228778",
-      "pass": "lamborghini",
-      "location": "bbbbbbbbb",
-      "id": 2
-    },
-    {
       "fname": "Steve",
       "lname": "Rogers",
       "email": "captain.america@gmail.com",
-      "phone": "9304228778",
-      "pass": "captaincaptain",
+      "phone": "",
+      "pass": "captainamerica",
       "location": "",
-      "id": 3
+      "id": 2
     }
   ]
 }
