@@ -65,7 +65,7 @@ function App() {
                 <Typography variant="h6" className={classes.title}>
                     <NavLink exact activeClassName="active" style={{color:'white',textDecorationLine:'none'}} to="/">Bug Tracker</NavLink>
                 </Typography>
-                <Button><NavLink exact activeClassName={classes.activeButton} className={classes.menuButtons} to="/issues">Issues</NavLink></Button>
+                {/* <Button><NavLink exact activeClassName={classes.activeButton} className={classes.menuButtons} to="/issues">Issues</NavLink></Button> */}
                 
                 {isLoggedIn?<Button color="inherit" onClick={handleLogout}>Log Out</Button>:<>  
                   <Button><NavLink exact activeClassName={classes.activeButton} className={classes.menuButtons} to="/login">Log In</NavLink></Button>
