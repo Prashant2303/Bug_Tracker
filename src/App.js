@@ -57,26 +57,9 @@ function App() {
     <Router>
       
         <div className={classes.root}>
-            <AppBar position="relative">
-                <Toolbar>
-                {/* <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-                    <MenuIcon />
-                </IconButton> */}
-                <Typography variant="h6" className={classes.title}>
-                    <NavLink exact activeClassName="active" style={{color:'white',textDecorationLine:'none'}} to="/">Bug Tracker</NavLink>
-                </Typography>
-                {/* <Button><NavLink exact activeClassName={classes.activeButton} className={classes.menuButtons} to="/issues">Issues</NavLink></Button> */}
-                
-                {isLoggedIn?<Button color="inherit" onClick={handleLogout}>Log Out</Button>:<>  
-                  <Button><NavLink exact activeClassName={classes.activeButton} className={classes.menuButtons} to="/login">Log In</NavLink></Button>
-                  <Button><NavLink exact activeClassName={classes.activeButton} className={classes.menuButtons} to="/signup">Sign Up</NavLink></Button>
-                </>}
-                <Button><NavLink exact activeClassName={classes.activeButton} className={classes.menuButtons} to="/chart">Chart</NavLink></Button>
-                <Button><NavLink exact activeClassName={classes.activeButton} className={classes.menuButtons} to="/about">About</NavLink></Button>
-                
-                </Toolbar>
-            </AppBar>
+          <PrimarySearchAppBar/>
         </div>
+
         {/* <Link to='/' >About</Link>
         <Link style={{marginLeft:20}} to='/issues' >Issues</Link> */}
         {/* <NavLink exact activeClassName="active" to="/">About</NavLink>
