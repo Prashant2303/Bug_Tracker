@@ -10,8 +10,12 @@ import { useDispatch, useSelector } from 'react-redux'
 import { login } from '../redux/userSlice';
 import { useHistory } from 'react-router-dom';
 // import base_url from '../service/api';
+import toast from 'react-hot-toast';
 
 const Login = () => {
+
+    const succ = () => toast.success('Logged Out Successfully');
+    const fail = () => toast.error('Something Went Wrong');
 
     const history = useHistory();
     const classes = useStyles();
@@ -55,11 +59,13 @@ const Login = () => {
                                 dispatch(login(result));
                                 setSubmitting(false)
                                 history.push("/");
+                                succ();
                             }
                             else
                             {
                                 setSubmitting(false)
-                                alert('Invalid Username or Password');
+                                // alert('Invalid Username or Password');
+                                fail();
                             }
                         }}
                     >

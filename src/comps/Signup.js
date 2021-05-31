@@ -10,9 +10,13 @@ import { add, login } from '../redux/userSlice';
 import base_url from '../service/api';
 import useStyles from './FormStyle';
 import { useHistory } from 'react-router-dom';
+import toast from 'react-hot-toast';
 
 const Signup = () => {
     
+    const succ = () => toast.success('Signed Up Successfully');
+    const fail = () => toast.error('Something Went Wrong');
+
     const classes = useStyles();
     const dispatch = useDispatch();
     const history = useHistory();
@@ -75,13 +79,15 @@ const Signup = () => {
                                         dispatch(login(alreadyExist));
 
                                         setSubmitting(false)
-                                        alert('User Added Succesfully')
+                                        // alert('User Added Succesfully')
                                         history.push("/");
+                                        succ();
                                         // console.log('After Add '+ JSON.stringify(userInStore));
                                     },
                                     (error) => {
                                         setSubmitting(false)
-                                        alert('User could not be added')
+                                        // alert('User could not be added')
+                                        fail()
                                     }
                                 )
                             }

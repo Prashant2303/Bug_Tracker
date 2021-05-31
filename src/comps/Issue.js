@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios';
 import base_url from '../service/api';
 import { DeleteForeverRounded, EditRounded, LaunchRounded } from '@material-ui/icons';
+import toast from 'react-hot-toast';
 
 const useStyles = makeStyles({
     root: {
@@ -24,6 +25,9 @@ const useStyles = makeStyles({
 
 const Issue = ({ issue, displayProps }) => {
     
+    const succ = () => toast.success('Issue deleted');
+    const fail = () => toast.error('Issue could not be deleted');
+
     const isLoggedIn = useSelector(state=>state.user.loginStatus);
     const classes = useStyles();
     const dispatch = useDispatch();
@@ -31,10 +35,12 @@ const Issue = ({ issue, displayProps }) => {
     const delIssue = (id) => {
         axios.delete(`${base_url}/issues/${id}`).then(
             (response)=>{
-                alert('Issue deleted')
+                // alert('Issue deleted')
+                succ()
             },
             (error) => {
-                alert('Something went wrong')
+                // alert('Something went wrong')
+                fail()
             }
         )
         dispatch(del(id));

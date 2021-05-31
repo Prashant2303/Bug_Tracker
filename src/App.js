@@ -13,6 +13,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { login } from './redux/userSlice';
 import VerticalBar from './comps/Chart';
 import PrimarySearchAppBar from './comps/Menu';
+import { Toaster } from 'react-hot-toast';
 const AddIssueFormik = lazy(() => import('./comps/AddIssue-Formik'));
 const IssueDetail = lazy(() => import('./comps/IssueDetail'));
 const EditIssue = lazy(() => import('./comps/EditIssue'));
@@ -55,7 +56,7 @@ function App() {
   return (
     <Suspense fallback={<Loading/>}>
     <Router>
-      
+        <Toaster/>
         <div className={classes.root}>
           <PrimarySearchAppBar/>
         </div>

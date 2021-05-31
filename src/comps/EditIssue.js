@@ -10,8 +10,12 @@ import { Paper, Grid, Container } from '@material-ui/core';
 import useStyles from './FormStyle';
 import ButtonWrapper from './ButtonWrapper';
 import { useHistory } from 'react-router-dom';
+import toast from 'react-hot-toast';
 
 const EditIssue = () => {
+
+    const succ = () => toast.success('Issue Updated');
+    const fail = () => toast.error('Something Went Wrong');
 
     const classes = useStyles();
     const issueToEdit = useLocation().state;
@@ -47,12 +51,14 @@ const EditIssue = () => {
                             axios.put(`${base_url}/issues/${issueToEdit.id}`, values).then(
                                 (response) => {
                                     setSubmitting(false)
-                                    alert('Issue Updated')
+                                    // alert('Issue Updated')
+                                    succ()
                                     history.push('/')
                                 },
                                 (error) => {
                                     setSubmitting(false)
-                                    alert('Issue could not be Updated')
+                                    fail()
+                                    // alert('Issue could not be Updated')
                                 }
                             )
                         }}

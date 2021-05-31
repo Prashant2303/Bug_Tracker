@@ -1,13 +1,14 @@
 import React from 'react';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import { AppBar, Toolbar, IconButton, Menu, MenuItem, Badge, Button, Typography } from '@material-ui/core';
-import AccountCircle from '@material-ui/icons/AccountCircle';
-import MailIcon from '@material-ui/icons/Mail';
-import NotificationsIcon from '@material-ui/icons/Notifications';
+// import AccountCircle from '@material-ui/icons/AccountCircle';
+// import MailIcon from '@material-ui/icons/Mail';
+// import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import { NavLink } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { login } from '../redux/userSlice';
+import toast from 'react-hot-toast';
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -43,6 +44,9 @@ const useStyles = makeStyles((theme) => ({
   },
   menuButtons: {
     color:'black',
+    [theme.breakpoints.up('md')]: {
+      color: 'white',
+    },
     textDecoration:'none'
   },
   activeButton:{
@@ -52,6 +56,9 @@ const useStyles = makeStyles((theme) => ({
 
 export default function PrimarySearchAppBar() {
 
+  const succ = () => toast.success('Logged Out Successfully');
+  // const fail = () => toast.error('Something Went Wrong');
+
   const isLoggedIn = useSelector(state=>state.user.loginStatus);
   console.log(isLoggedIn)
   const dispatch = useDispatch();
@@ -59,6 +66,7 @@ export default function PrimarySearchAppBar() {
   const handleLogout = () => {
     localStorage.removeItem('user')
     dispatch(login(false))
+    succ()
     // history.push('/');
   }
 
