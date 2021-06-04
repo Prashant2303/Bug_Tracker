@@ -58,13 +58,14 @@ const Signup = () => {
                             {
                                 if(userList[i].email===values.email)
                                 {
-                                    alert(userList[i].email+' '+values.email);
+                                    // alert(userList[i].email+' '+values.email);
                                     alreadyExist = true;
                                     break;
                                 }
                             }
                             if(alreadyExist===true)
                             {
+                                setSubmitting(false)
                                 alert('User already Exists')
                             }
                             else
