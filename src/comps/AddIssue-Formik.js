@@ -11,8 +11,12 @@ import { Paper, Grid, Container} from '@material-ui/core';
 import useStyles from './FormStyle';
 import ButtonWrapper from './ButtonWrapper';
 import { Prompt, useHistory } from 'react-router-dom'
+import toast from 'react-hot-toast'
 
 const AddIssueFormik = () => {
+
+    const succ = () => toast.success('Issue Added');
+    const fail = () => toast.error('Something Went Wrong');
 
     const classes = useStyles();
 
@@ -68,13 +72,13 @@ const AddIssueFormik = () => {
                                     dispatch(add(values));
                                     setChanged(false);
                                     setSubmitting(false);
-                                    alert('Issue Added')
                                     history.push('/');
+                                    succ();
                                     // console.log('After Add '+ JSON.stringify(listInStore));
                                 },
                                 (error) => {
                                     setSubmitting(false);
-                                    alert('Issue could not be added')
+                                    fail();
                                 }
                             )
                         }}

@@ -14,7 +14,7 @@ import toast from 'react-hot-toast';
 
 const Login = () => {
 
-    const succ = () => toast.success('Logged Out Successfully');
+    const succ = () => toast.success('Logged In Successfully');
     const fail = () => toast.error('Something Went Wrong');
 
     const history = useHistory();
