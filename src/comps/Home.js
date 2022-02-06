@@ -5,7 +5,7 @@ import base_url from '../service/api';
 import IssuesList from './IssuesList';
 import { useDispatch } from 'react-redux';
 import { load } from '../redux/issueSlice';
-import { loadUsers, login } from '../redux/userSlice';
+import { login, getUsersThunk } from '../redux/userSlice';
 
 const Home = () => {
 
@@ -13,7 +13,7 @@ const Home = () => {
 
     useEffect(() => {
         getIssuesFromServer();
-        getUsersFromServer();
+        dispatch(getUsersThunk());
         getUserFromSession();
     },[])
 
@@ -29,18 +29,7 @@ const Home = () => {
             }
         )
     }
-    const getUsersFromServer = () => {
-        axios.get(`${base_url}/users`).then(
-            (response) => {
-                console.log('Users from server '+ JSON.stringify(response.data));
-                // setIssues(response.data);
-                dispatch(loadUsers(response.data));
-            },
-            (error) => {
-                console.log(error);
-            }
-        )
-    }
+
     const getUserFromSession = () => {
         const loggedInUser = localStorage.getItem("user");
         console.log(loggedInUser)

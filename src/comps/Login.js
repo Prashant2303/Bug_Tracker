@@ -21,7 +21,7 @@ const Login = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const userList = useSelector(state=>state.user.list);
-    console.log(userList);
+    console.log('USERLIST ',userList);
 
     const [submitting, setSubmitting] = useState(false)
 
