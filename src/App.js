@@ -28,41 +28,41 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
   },
   menuButtons: {
-    color:'white',
-    textDecoration:'none'
+    color: 'white',
+    textDecoration: 'none'
   },
-  activeButton:{
-    color:'lightgrey'
+  activeButton: {
+    color: 'lightgrey'
   }
 }));
 
 function App() {
 
   const classes = useStyles();
-  const isLoggedIn = useSelector(state=>state.user.loginStatus);
-  
+  const isLoggedIn = useSelector(state => state.user.loginStatus);
+
   return (
-    <Suspense fallback={<Loading/>}>
-    <Router>
-        <Toaster/>
+    <Suspense fallback={<Loading />}>
+      <Router>
+        <Toaster />
         <div className={classes.root}>
-          <MenuBar/>
+          <MenuBar />
         </div>
         <Route path='/' exact > <Home /> </Route>
         <Route path='/about' exact > <About /> </Route>
         <Route path='/issues' exact > <Home /> </Route>
-        <Route path='/addIssue' exact > {isLoggedIn? <AddIssueFormik />: <Unauthorized />} </Route>
+        <Route path='/addIssue' exact > {isLoggedIn ? <AddIssueFormik /> : <Unauthorized />} </Route>
         <Route path='/issueDetails' exact><IssueDetail /></Route>
         <Route path='/signup' exact><Signup /></Route>
         <Route path='/editIssue' exact><EditIssue /></Route>
         <Route path='/login' exact><Login /></Route>
         <Route path='/chart' exact><VerticalBar /></Route>
         {/* <Route path='/menu' exact><MenuBar /></Route> */}
-      
-    </Router>
+
+      </Router>
     </Suspense>
   );
 }
 
 export default App;
-export {App};
+export { App };
