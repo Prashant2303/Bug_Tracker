@@ -1,16 +1,12 @@
-import logo from './logo.svg';
 import './App.css';
-import { useState, Suspense, lazy } from 'react';
+import { Suspense, lazy } from 'react';
 import Home from './comps/Home';
-import { BrowserRouter as Router, Switch, Route, Link, NavLink, useHistory} from "react-router-dom";
-// import AddIssue from './comps/AddIssue';
-import { Button, Container, AppBar, Toolbar, IconButton, Typography } from '@material-ui/core';
+import { BrowserRouter as Router, Route } from "react-router-dom";
 import { makeStyles } from '@material-ui/core/styles';
 import Loading from './comps/Loading';
 import Login from './comps/Login';
 import Unauthorized from './comps/Unauthorized';
-import { useSelector, useDispatch } from 'react-redux';
-import { login } from './redux/userSlice';
+import { useSelector } from 'react-redux';
 import VerticalBar from './comps/Chart';
 import MenuBar from './comps/MenuBar';
 import { Toaster } from 'react-hot-toast';
@@ -44,14 +40,6 @@ function App() {
 
   const classes = useStyles();
   const isLoggedIn = useSelector(state=>state.user.loginStatus);
-
-  const dispatch = useDispatch();
-
-  const handleLogout = () => {
-    localStorage.removeItem('user')
-    dispatch(login(false))
-    // history.push('/');
-  }
   
   return (
     <Suspense fallback={<Loading/>}>
@@ -60,12 +48,6 @@ function App() {
         <div className={classes.root}>
           <MenuBar/>
         </div>
-
-        {/* <Link to='/' >About</Link>
-        <Link style={{marginLeft:20}} to='/issues' >Issues</Link> */}
-        {/* <NavLink exact activeClassName="active" to="/">About</NavLink>
-        <NavLink exact activeClassName="active" style={{marginLeft:20}} to="/issues">Issues</NavLink>
-        <NavLink exact activeClassName="active" style={{marginLeft:20}} to="/signup">Sign Up</NavLink> */}
         <Route path='/' exact > <Home /> </Route>
         <Route path='/about' exact > <About /> </Route>
         <Route path='/issues' exact > <Home /> </Route>
