@@ -54,7 +54,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function PrimarySearchAppBar() {
+export default function MenuBar() {
 
   const succ = () => toast.success('Logged Out Successfully');
   // const fail = () => toast.error('Something Went Wrong');
@@ -170,6 +170,7 @@ export default function PrimarySearchAppBar() {
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
           
+          <Button><NavLink exact activeClassName={classes.activeButton} className={classes.menuButtons} to="/">Home</NavLink></Button>
           {isLoggedIn?<Button color="inherit" onClick={handleLogout}>Log Out</Button>:<>  
             <Button><NavLink exact activeClassName={classes.activeButton} className={classes.menuButtons} to="/login">Log In</NavLink></Button>
             <Button><NavLink exact activeClassName={classes.activeButton} className={classes.menuButtons} to="/signup">Sign Up</NavLink></Button>

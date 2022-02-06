@@ -1,7 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
 import { useState, Suspense, lazy } from 'react';
-import AllIssues from './comps/Home';
+import Home from './comps/Home';
 import { BrowserRouter as Router, Switch, Route, Link, NavLink, useHistory} from "react-router-dom";
 // import AddIssue from './comps/AddIssue';
 import { Button, Container, AppBar, Toolbar, IconButton, Typography } from '@material-ui/core';
@@ -12,7 +12,7 @@ import Unauthorized from './comps/Unauthorized';
 import { useSelector, useDispatch } from 'react-redux';
 import { login } from './redux/userSlice';
 import VerticalBar from './comps/Chart';
-import PrimarySearchAppBar from './comps/Menu';
+import MenuBar from './comps/MenuBar';
 import { Toaster } from 'react-hot-toast';
 const AddIssueFormik = lazy(() => import('./comps/AddIssue-Formik'));
 const IssueDetail = lazy(() => import('./comps/IssueDetail'));
@@ -58,7 +58,7 @@ function App() {
     <Router>
         <Toaster/>
         <div className={classes.root}>
-          <PrimarySearchAppBar/>
+          <MenuBar/>
         </div>
 
         {/* <Link to='/' >About</Link>
@@ -66,16 +66,16 @@ function App() {
         {/* <NavLink exact activeClassName="active" to="/">About</NavLink>
         <NavLink exact activeClassName="active" style={{marginLeft:20}} to="/issues">Issues</NavLink>
         <NavLink exact activeClassName="active" style={{marginLeft:20}} to="/signup">Sign Up</NavLink> */}
-        <Route path='/' exact > <AllIssues /> </Route>
+        <Route path='/' exact > <Home /> </Route>
         <Route path='/about' exact > <About /> </Route>
-        <Route path='/issues' exact > <AllIssues /> </Route>
+        <Route path='/issues' exact > <Home /> </Route>
         <Route path='/addIssue' exact > {isLoggedIn? <AddIssueFormik />: <Unauthorized />} </Route>
         <Route path='/issueDetails' exact><IssueDetail /></Route>
         <Route path='/signup' exact><Signup /></Route>
         <Route path='/editIssue' exact><EditIssue /></Route>
         <Route path='/login' exact><Login /></Route>
         <Route path='/chart' exact><VerticalBar /></Route>
-        <Route path='/menu' exact><PrimarySearchAppBar /></Route>
+        {/* <Route path='/menu' exact><MenuBar /></Route> */}
       
     </Router>
     </Suspense>
