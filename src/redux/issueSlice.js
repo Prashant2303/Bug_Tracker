@@ -1,4 +1,19 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import axios from 'axios'
+import base_url from '../service/api'
+
+export const getIssuesThunk = createAsyncThunk(
+  'getIssues',
+  async () => {
+    try {
+      const response = await axios.get(`${base_url}/issues`);
+      // console.log('FROM THUNK ', response.data);
+      return response.data;
+    } catch (error) {
+      console.error(error);
+    }
+  }
+)
 
 export const counterSlice = createSlice({
   name: 'handler',
@@ -37,6 +52,11 @@ export const counterSlice = createSlice({
       // console.log(JSON.stringify(index+" "+deletedIssue));
     }
   },
+  extraReducers: {
+    [getIssuesThunk.fulfilled]: (state, action) => {
+      state.list = action.payload;
+    }
+  }
 })
 // Action creators are generated for each case reducer function
 export const { load, add, del } = counterSlice.actions
