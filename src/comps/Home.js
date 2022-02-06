@@ -15,7 +15,7 @@ const Home = () => {
         getIssuesFromServer();
         getUsersFromServer();
         getUserFromSession();
-    })
+    },[])
 
     const getIssuesFromServer = () => {
         axios.get(`${base_url}/issues`).then(
