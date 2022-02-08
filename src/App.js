@@ -11,7 +11,7 @@ import VerticalBar from './comps/Chart';
 import MenuBar from './comps/MenuBar';
 import { Toaster } from 'react-hot-toast';
 const AddIssueFormik = lazy(() => import('./comps/AddIssue-Formik'));
-const IssueDetail = lazy(() => import('./comps/IssueDetail'));
+const IssueDetail = lazy(() => import('./comps/issues/IssueDetail'));
 const EditIssue = lazy(() => import('./comps/EditIssue'));
 const Signup = lazy(() => import('./comps/Signup'));
 const About = lazy(() => import('./comps/About'));

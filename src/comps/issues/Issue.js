@@ -2,10 +2,12 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import { Card, CardContent, Typography, Grid, IconButton, CardActions, CardHeader} from '@material-ui/core';
-import { del } from '../redux/issueSlice';
+// import { del } from '../redux/issueSlice';
+import { del } from '../../redux/issueSlice';
 import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios';
-import base_url from '../service/api';
+// import base_url from '../service/api';
+import base_url from '../../service/api';
 import { DeleteForeverRounded, EditRounded, LaunchRounded } from '@material-ui/icons';
 import toast from 'react-hot-toast';
 

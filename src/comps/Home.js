@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Container } from '@material-ui/core';
-import IssuesList from './IssuesList';
+import IssuesList from './issues/IssuesList';
 import { useDispatch } from 'react-redux';
 import { getIssuesThunk } from '../redux/issueSlice';
 import { login, getUsersThunk } from '../redux/userSlice';
