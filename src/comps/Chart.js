@@ -2,7 +2,7 @@ import React,{useState} from 'react'
 import { Container, Grid } from '@material-ui/core';
 import { Bar } from 'react-chartjs-2';
 import { useSelector } from 'react-redux';
-import TextWrapper from './TextWrapper'
+import TextWrapper from './forms/TextWrapper'
 import { Formik, Form } from 'formik'
 import * as Yup from 'yup';
 

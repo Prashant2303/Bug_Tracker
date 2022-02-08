@@ -6,8 +6,8 @@ import { Grid, Paper, Container } from '@material-ui/core';
 import ButtonWrapper from './ButtonWrapper';
 import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
-import { add, login } from '../redux/userSlice';
-import base_url from '../service/api';
+import { add, login } from '../../redux/userSlice';
+import base_url from '../../service/api';
 import useStyles from './FormStyle';
 import { useHistory } from 'react-router-dom';
 import toast from 'react-hot-toast';

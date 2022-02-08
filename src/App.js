@@ -4,16 +4,16 @@ import Home from './comps/Home';
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import { makeStyles } from '@material-ui/core/styles';
 import Loading from './comps/Loading';
-import Login from './comps/Login';
+import Login from './comps/forms/Login';
 import Unauthorized from './comps/Unauthorized';
 import { useSelector } from 'react-redux';
 import VerticalBar from './comps/Chart';
 import MenuBar from './comps/MenuBar';
 import { Toaster } from 'react-hot-toast';
-const AddIssueFormik = lazy(() => import('./comps/AddIssue-Formik'));
+const AddIssueFormik = lazy(() => import('./comps/forms/AddIssue-Formik'));
 const IssueDetail = lazy(() => import('./comps/issues/IssueDetail'));
-const EditIssue = lazy(() => import('./comps/EditIssue'));
-const Signup = lazy(() => import('./comps/Signup'));
+const EditIssue = lazy(() => import('./comps/forms/EditIssue'));
+const Signup = lazy(() => import('./comps/forms/Signup'));
 const About = lazy(() => import('./comps/About'));
 
 const useStyles = makeStyles((theme) => ({

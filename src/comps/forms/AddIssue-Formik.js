@@ -2,9 +2,9 @@ import React ,{useEffect, useState} from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
-import base_url from '../service/api';
+import base_url from '../../service/api';
 import { useDispatch, useSelector } from 'react-redux';
-import { add } from '../redux/issueSlice';
+import { add } from '../../redux/issueSlice';
 import TextWrapper from './TextWrapper';
 import SelectWrapper from './SelectWrapper'
 import { Paper, Grid, Container} from '@material-ui/core';
@@ -59,15 +59,16 @@ const AddIssueFormik = () => {
                             //https://stackoverflow.com/questions/15491894/regex-to-validate-date-format-dd-mm-yyyy
                         })}
                         onSubmit={(values) => {
-                            console.log(JSON.stringify(values));
                             // console.log('This is setSubmitting '+ setSubmitting +' yeah'+ isSubmitting);
                             setSubmitting(true);
                             
                             let lastId = listInStore==null ? 0 : listInStore[listInStore.length - 1].id;
                             values.id = lastId + 1;
                             values.viewed = 1;
+                            console.log('ONSUBMIT',values);
                             axios.post(`${base_url}/issues`, values).then(
                                 (response) => {
+                                    console.log('INSIDE POST');
                                     // console.log('Before Add '+ JSON.stringify(listInStore));
                                     dispatch(add(values));
                                     setChanged(false);
@@ -77,6 +78,7 @@ const AddIssueFormik = () => {
                                     // console.log('After Add '+ JSON.stringify(listInStore));
                                 },
                                 (error) => {
+                                    console.log(error);
                                     setSubmitting(false);
                                     fail();
                                 }

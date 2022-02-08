@@ -2,7 +2,7 @@ import React,{ useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
-import base_url from '../service/api';
+import base_url from '../../service/api';
 import { useLocation } from 'react-router';
 import TextWrapper from './TextWrapper';
 import SelectWrapper from './SelectWrapper'
