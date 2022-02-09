@@ -2,11 +2,9 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import { Card, CardContent, Typography, Grid, IconButton, CardActions, CardHeader} from '@material-ui/core';
-// import { del } from '../redux/issueSlice';
 import { del } from '../../redux/issueSlice';
 import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios';
-// import base_url from '../service/api';
 import base_url from '../../service/api';
 import { DeleteForeverRounded, EditRounded, LaunchRounded } from '@material-ui/icons';
 import toast from 'react-hot-toast';
@@ -29,6 +27,7 @@ const Issue = ({ issue, displayProps }) => {
     
     const succ = () => toast.success('Issue deleted');
     const fail = () => toast.error('Issue could not be deleted');
+    const loginRequiredToast = () => toast('Login Required');
 
     const isLoggedIn = useSelector(state=>state.user.loginStatus);
     const classes = useStyles();
@@ -37,11 +36,9 @@ const Issue = ({ issue, displayProps }) => {
     const delIssue = (id) => {
         axios.delete(`${base_url}/issues/${id}`).then(
             (response)=>{
-                // alert('Issue deleted')
                 succ()
             },
             (error) => {
-                // alert('Something went wrong')
                 fail()
             }
         )
@@ -52,7 +49,7 @@ const Issue = ({ issue, displayProps }) => {
         if(isLoggedIn===false)
         {
             e.preventDefault();
-            alert('Login Required')
+            loginRequiredToast();
         }
         else
         {
@@ -74,14 +71,14 @@ const Issue = ({ issue, displayProps }) => {
         if(isLoggedIn===false)
         {
             e.preventDefault();
-            alert('Login Required')
+            loginRequiredToast();
         }
     }
     const handleDelete = (e) => {
         if(isLoggedIn===false)
         {
             e.preventDefault();
-            alert('Login Required')
+            loginRequiredToast();
         }
         else
         {

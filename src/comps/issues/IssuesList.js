@@ -115,7 +115,7 @@ export default function IssuesList() {
 
 
       <Grid container justify='center' spacing={2}>
-        {data != undefined && data.length > 0 ? data.map((row) => (
+        {data !== undefined && data.length > 0 ? data.map((row) => (
             <Issue key={row.id} issue={row} displayProps={{...state}}/>
             )) : <p>No Issues</p>}
       </Grid>
