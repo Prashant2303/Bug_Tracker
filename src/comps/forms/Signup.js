@@ -121,7 +121,7 @@ const Signup = () => {
                             </Grid>
                             <Grid item xs={12}>
                                 <ButtonWrapper disabled={submitting}>
-                                    {submitting==true?'Signing Up':'Sign Up'}
+                                    {submitting===true?'Signing Up':'Sign Up'}
                                 </ButtonWrapper>
                             </Grid>
                             {/* <Button variant='contained' color='primary' type='submit' fullWidth=true >Sign Up</Button> */}

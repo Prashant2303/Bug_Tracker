@@ -7,8 +7,12 @@ export const getIssuesThunk = createAsyncThunk(
   async () => {
     try {
       const response = await axios.get(`${base_url}/issues`);
+      const responseObject = {
+        response : response.data,
+        isLoading : false
+      }
       // console.log('FROM THUNK ', response.data);
-      return response.data;
+      return responseObject;
     } catch (error) {
       console.error(error);
     }
@@ -19,6 +23,7 @@ export const counterSlice = createSlice({
   name: 'handler',
   initialState: {
     list: [],
+    isLoading: true
   },
   reducers: {
     load: (state, action) => {
@@ -54,7 +59,8 @@ export const counterSlice = createSlice({
   },
   extraReducers: {
     [getIssuesThunk.fulfilled]: (state, action) => {
-      state.list = action.payload;
+      state.list = action.payload.response;
+      state.isLoading = action.payload.isLoading;
     }
   }
 })
