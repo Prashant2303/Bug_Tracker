@@ -60,7 +60,7 @@ const AddIssueFormik = () => {
                             try {
                                 let maxId = 0;
                                 for (let i = 0; i < listInStore.length; i++) {
-                                    maxId = Math.max( maxId, listInStore[i].id )
+                                    maxId = Math.max(maxId, listInStore[i].id)
                                 }
                                 values.id = maxId + 1;
                                 values.viewed = 1;

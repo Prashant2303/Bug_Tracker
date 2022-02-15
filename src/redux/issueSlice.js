@@ -52,9 +52,9 @@ export const delIssueThunk = createAsyncThunk(
 export const updateViewCountThunk = createAsyncThunk(
   'updateViewCount',
   async (issue) => {
-    try{
-      let newIssue = {...issue};
-      newIssue.viewed = issue.viewed+1;
+    try {
+      let newIssue = { ...issue };
+      newIssue.viewed = issue.viewed + 1;
       await axios.put(`${base_url}/issues/${issue.id}`, newIssue);
     }
     catch (error) {
