@@ -38,13 +38,14 @@ export const addIssueThunk = createAsyncThunk(
 
 export const delIssueThunk = createAsyncThunk(
   'delIssue',
-  async (id) => {
+  async (id, { rejectWithValue }) => {
     try {
       await axios.delete(`${base_url}/issues/${id}`)
       return id;
     }
     catch (error) {
       console.log(error);
+      return rejectWithValue(null)
     }
   }
 )
@@ -108,14 +109,16 @@ export const counterSlice = createSlice({
       state.list.push(action.payload);
     },
     [delIssueThunk.fulfilled]: (state, action) => {
-      let index;
-      for (let i = 0; i < state.list.length; i++) {
-        if (state.list[i].id === action.payload) {
-          index = i;
-          break;
+      if (action !== null) {
+        let index;
+        for (let i = 0; i < state.list.length; i++) {
+          if (state.list[i].id === action.payload) {
+            index = i;
+            break;
+          }
         }
+        state.list.splice(index, 1);
       }
-      state.list.splice(index, 1);
     },
 
   }
