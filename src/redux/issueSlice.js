@@ -8,12 +8,29 @@ export const getIssuesThunk = createAsyncThunk(
     try {
       const response = await axios.get(`${base_url}/issues`);
       const responseObject = {
-        response : response.data,
-        isLoading : false
+        response: response.data,
+        isLoading: false
       }
       // console.log('FROM THUNK ', response.data);
       return responseObject;
     } catch (error) {
+      console.error(error);
+      return {
+        response: [],
+        isLoading: false
+      }
+    }
+  }
+)
+
+export const addIssueThunk = createAsyncThunk(
+  'addIssue',
+  async (issue) => {
+    try {
+      const response = await axios.post(`${base_url}/issues`, issue)
+      return response.data;
+    }
+    catch (error) {
       console.error(error);
     }
   }
@@ -26,34 +43,32 @@ export const counterSlice = createSlice({
     isLoading: true
   },
   reducers: {
-    load: (state, action) => {
-      state.list = action.payload;
-    },
-    add : (state, action) => {
-      state.list.push(action.payload);
-      console.log(JSON.stringify(state.list));
-      // increment: (state) => {
-      //   // Redux Toolkit allows us to write "mutating" logic in reducers. It
-      //   // doesn't actually mutate the state because it uses the Immer library,
-      //   // which detects changes to a "draft state" and produces a brand new
-      //   // immutable state based off those changes
-      //   state.value += 1
-      // },
-    },
-    del : (state, action) => {
+    // load: (state, action) => {
+    //   state.list = action.payload;
+    // },
+    // add : (state, action) => {
+    //   state.list.push(action.payload);
+    //   console.log(JSON.stringify(state.list));
+    //   // increment: (state) => {
+    //   //   // Redux Toolkit allows us to write "mutating" logic in reducers. It
+    //   //   // doesn't actually mutate the state because it uses the Immer library,
+    //   //   // which detects changes to a "draft state" and produces a brand new
+    //   //   // immutable state based off those changes
+    //   //   state.value += 1
+    //   // },
+    // },
+    del: (state, action) => {
       let index;
       // console.log(action.payload);
-      for(let i=0;i<state.list.length;i++)
-      {
+      for (let i = 0; i < state.list.length; i++) {
         // console.log(JSON.stringify(state.list[i]));
-        if(state.list[i].id === action.payload)
-        { 
+        if (state.list[i].id === action.payload) {
           index = i;
           // console.log(JSON.stringify(i+" "+state.list[i]));
           break;
         }
       }
-      let deletedIssue = state.list.splice(index,1);
+      let deletedIssue = state.list.splice(index, 1);
       // console.log(JSON.stringify(index+" "+deletedIssue));
     }
   },
@@ -61,6 +76,9 @@ export const counterSlice = createSlice({
     [getIssuesThunk.fulfilled]: (state, action) => {
       state.list = action.payload.response;
       state.isLoading = action.payload.isLoading;
+    },
+    [addIssueThunk.fulfilled]: (state, action) => {
+      state.list.push(action.payload);
     }
   }
 })
