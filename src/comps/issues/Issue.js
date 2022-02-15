@@ -2,10 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import { Card, CardContent, Typography, Grid, IconButton, CardActions, CardHeader} from '@material-ui/core';
-import { delIssueThunk } from '../../redux/issueSlice';
+import { delIssueThunk, updateViewCountThunk } from '../../redux/issueSlice';
 import { useDispatch, useSelector } from 'react-redux'
-import axios from 'axios';
-import base_url from '../../service/api';
 import { DeleteForeverRounded, EditRounded, LaunchRounded } from '@material-ui/icons';
 import toast from 'react-hot-toast';
 
@@ -44,6 +42,15 @@ const Issue = ({ issue, displayProps }) => {
         }
     }
 
+    const updateViewCount = async (issue) => {
+        try{
+            await dispatch(updateViewCountThunk(issue));
+        }
+        catch (err) {
+            console.log(err);
+        }
+    }
+
     const handleDetails = (e) => {
         if(isLoggedIn===false)
         {
@@ -51,21 +58,9 @@ const Issue = ({ issue, displayProps }) => {
             loginRequiredToast();
         }
         else
-        {
-            // console.log(JSON.stringify(issue))
-            let newIssue = {...issue};
-            newIssue.viewed = issue.viewed+1;
-            // console.log(JSON.stringify(newIssue))
-            axios.put(`${base_url}/issues/${issue.id}`, newIssue).then(
-                (response) => {
-                    console.log('Issue Count Updated')
-                },
-                (error) => {
-                    alert('Issue count not Updated')
-                }
-            )
-        }
+            updateViewCount(issue);
     }
+    
     const handleEdit = (e) => {
         if(isLoggedIn===false)
         {
@@ -73,6 +68,7 @@ const Issue = ({ issue, displayProps }) => {
             loginRequiredToast();
         }
     }
+
     const handleDelete = (e) => {
         if(isLoggedIn===false)
         {
@@ -80,10 +76,9 @@ const Issue = ({ issue, displayProps }) => {
             loginRequiredToast();
         }
         else
-        {
             delIssue(issue.id)
-        }
     }
+
     return (
         <Grid item xs={12} sm={8} md={5}>
         
