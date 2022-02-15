@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import { Card, CardContent, Typography, Grid, IconButton, CardActions, CardHeader} from '@material-ui/core';
-import { del } from '../../redux/issueSlice';
+import { delIssueThunk } from '../../redux/issueSlice';
 import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios';
 import base_url from '../../service/api';
@@ -33,16 +33,15 @@ const Issue = ({ issue, displayProps }) => {
     const classes = useStyles();
     const dispatch = useDispatch();
 
-    const delIssue = (id) => {
-        axios.delete(`${base_url}/issues/${id}`).then(
-            (response)=>{
-                succ()
-            },
-            (error) => {
-                fail()
-            }
-        )
-        dispatch(del(id));
+    const delIssue = async (id) => {
+        try{
+            await dispatch(delIssueThunk(id));
+            succ();
+        }
+        catch (err) {
+            console.log(err);
+            fail()
+        }
     }
 
     const handleDetails = (e) => {

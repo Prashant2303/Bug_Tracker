@@ -36,6 +36,19 @@ export const addIssueThunk = createAsyncThunk(
   }
 )
 
+export const delIssueThunk = createAsyncThunk(
+  'delIssue',
+  async (id) => {
+    try {
+      await axios.delete(`${base_url}/issues/${id}`)
+      return id;
+    }
+    catch (error) {
+      console.log(error);
+    }
+  }
+)
+
 export const counterSlice = createSlice({
   name: 'handler',
   initialState: {
@@ -57,20 +70,20 @@ export const counterSlice = createSlice({
     //   //   state.value += 1
     //   // },
     // },
-    del: (state, action) => {
-      let index;
-      // console.log(action.payload);
-      for (let i = 0; i < state.list.length; i++) {
-        // console.log(JSON.stringify(state.list[i]));
-        if (state.list[i].id === action.payload) {
-          index = i;
-          // console.log(JSON.stringify(i+" "+state.list[i]));
-          break;
-        }
-      }
-      let deletedIssue = state.list.splice(index, 1);
-      // console.log(JSON.stringify(index+" "+deletedIssue));
-    }
+    // del: (state, action) => {
+    //   let index;
+    //   // console.log(action.payload);
+    //   for (let i = 0; i < state.list.length; i++) {
+    //     // console.log(JSON.stringify(state.list[i]));
+    //     if (state.list[i].id === action.payload) {
+    //       index = i;
+    //       // console.log(JSON.stringify(i+" "+state.list[i]));
+    //       break;
+    //     }
+    //   }
+    //   let deletedIssue = state.list.splice(index, 1);
+    //   // console.log(JSON.stringify(index+" "+deletedIssue));
+    // }
   },
   extraReducers: {
     [getIssuesThunk.fulfilled]: (state, action) => {
@@ -79,7 +92,18 @@ export const counterSlice = createSlice({
     },
     [addIssueThunk.fulfilled]: (state, action) => {
       state.list.push(action.payload);
-    }
+    },
+    [delIssueThunk.fulfilled]: (state, action) => {
+      let index;
+      for (let i = 0; i < state.list.length; i++) {
+        if (state.list[i].id === action.payload) {
+          index = i;
+          break;
+        }
+      }
+      state.list.splice(index, 1);
+    },
+
   }
 })
 // Action creators are generated for each case reducer function

@@ -58,8 +58,11 @@ const AddIssueFormik = () => {
                         onSubmit={async (values) => {
                             setSubmitting(true);
                             try {
-                                let lastId = listInStore == null ? 0 : listInStore[listInStore.length - 1].id;
-                                values.id = lastId + 1;
+                                let maxId = 0;
+                                for (let i = 0; i < listInStore.length; i++) {
+                                    maxId = Math.max( maxId, listInStore[i].id )
+                                }
+                                values.id = maxId + 1;
                                 values.viewed = 1;
                                 await dispatch(addIssueThunk(values));
                                 setChanged(false);
