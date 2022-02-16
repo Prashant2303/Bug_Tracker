@@ -95,14 +95,7 @@ export const counterSlice = createSlice({
     },
     [delIssueThunk.fulfilled]: (state, action) => {
       if (action !== null) {
-        let index;
-        for (let i = 0; i < state.list.length; i++) {
-          if (state.list[i].id === action.payload) {
-            index = i;
-            break;
-          }
-        }
-        state.list.splice(index, 1);
+        state.list = state.list.filter( issue => issue.id !== action.payload);
       }
     },
 
