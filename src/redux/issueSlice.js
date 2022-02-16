@@ -64,6 +64,19 @@ export const updateViewCountThunk = createAsyncThunk(
   }
 )
 
+export const updateIssueThunk = createAsyncThunk(
+  'updateIssue',
+  async (issue) => {
+    try {
+      const response = await axios.put(`${base_url}/issues/${issue.id}`, issue);
+      return response;
+    }
+    catch (error) {
+      console.log(error);
+    }
+  }
+)
+
 export const counterSlice = createSlice({
   name: 'handler',
   initialState: {

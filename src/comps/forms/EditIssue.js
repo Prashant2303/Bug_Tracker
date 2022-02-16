@@ -1,8 +1,6 @@
-import React,{ useState } from 'react';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import React, { useState } from 'react';
+import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
-import axios from 'axios';
-import base_url from '../../service/api';
 import { useLocation } from 'react-router';
 import TextWrapper from './TextWrapper';
 import SelectWrapper from './SelectWrapper'
@@ -11,6 +9,9 @@ import useStyles from './FormStyle';
 import ButtonWrapper from './ButtonWrapper';
 import { useHistory } from 'react-router-dom';
 import toast from 'react-hot-toast';
+import { useDispatch } from 'react-redux';
+import { updateIssueThunk } from '../../redux/issueSlice';
+import { unwrapResult } from '@reduxjs/toolkit';
 
 const EditIssue = () => {
 
@@ -20,6 +21,7 @@ const EditIssue = () => {
     const classes = useStyles();
     const issueToEdit = useLocation().state;
     const history = useHistory()
+    const dispatch = useDispatch()
 
     const [submitting, setSubmitting] = useState(false)
 
@@ -40,28 +42,25 @@ const EditIssue = () => {
                             desc: Yup.string().min(3, 'Must be 3 chars').required('Issue Description is required'),
                             severity: Yup.string().required('Select Severity'),
                             status: Yup.string().required(),
-                            cdate: Yup.string().matches(/^(?:(?:31(\/|-|\.)(?:0?[13578]|1[02]))\1|(?:(?:29|30)(\/|-|\.)(?:0?[13-9]|1[0-2])\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:29(\/|-|\.)0?2\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\d|2[0-8])(\/|-|\.)(?:(?:0?[1-9])|(?:1[0-2]))\4(?:(?:1[6-9]|[2-9]\d)?\d{2})$/,'Date should be Valid and in dd/mm/yyyy or dd-mm-yyyy format').required('Required'),
-                            rdate: Yup.string().matches(/^(?:(?:31(\/|-|\.)(?:0?[13578]|1[02]))\1|(?:(?:29|30)(\/|-|\.)(?:0?[13-9]|1[0-2])\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:29(\/|-|\.)0?2\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\d|2[0-8])(\/|-|\.)(?:(?:0?[1-9])|(?:1[0-2]))\4(?:(?:1[6-9]|[2-9]\d)?\d{2})$/,'Date should be Valid and in dd/mm/yyyy or dd-mm-yyyy format')
+                            cdate: Yup.string().matches(/^(?:(?:31(\/|-|\.)(?:0?[13578]|1[02]))\1|(?:(?:29|30)(\/|-|\.)(?:0?[13-9]|1[0-2])\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:29(\/|-|\.)0?2\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\d|2[0-8])(\/|-|\.)(?:(?:0?[1-9])|(?:1[0-2]))\4(?:(?:1[6-9]|[2-9]\d)?\d{2})$/, 'Date should be Valid and in dd/mm/yyyy or dd-mm-yyyy format').required('Required'),
+                            rdate: Yup.string().matches(/^(?:(?:31(\/|-|\.)(?:0?[13578]|1[02]))\1|(?:(?:29|30)(\/|-|\.)(?:0?[13-9]|1[0-2])\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:29(\/|-|\.)0?2\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\d|2[0-8])(\/|-|\.)(?:(?:0?[1-9])|(?:1[0-2]))\4(?:(?:1[6-9]|[2-9]\d)?\d{2})$/, 'Date should be Valid and in dd/mm/yyyy or dd-mm-yyyy format')
                         })}
-                        onSubmit={(values) => {
-
-                            setSubmitting(true)
-                            values.id = issueToEdit.id;
-
-                            axios.put(`${base_url}/issues/${issueToEdit.id}`, values).then(
-                                (response) => {
-                                    setSubmitting(false)
-                                    // alert('Issue Updated')
-                                    succ()
-                                    history.push('/')
-                                },
-                                (error) => {
-                                    setSubmitting(false)
-                                    fail()
-                                    // alert('Issue could not be Updated')
+                        onSubmit={
+                            async (values) => {
+                                setSubmitting(true);
+                                values.id = issueToEdit.id;
+                                try {
+                                    unwrapResult(await dispatch(updateIssueThunk(values)));
+                                    setSubmitting(false);
+                                    succ();
+                                    history.push('/');
                                 }
-                            )
-                        }}
+                                catch (error) {
+                                    console.log('Error', error);
+                                    fail();
+                                }
+                            }
+                        }
                     >
 
                         <Form>
@@ -76,23 +75,23 @@ const EditIssue = () => {
                                 </Grid>
 
                                 <Grid item xs={12}>
-                                    <SelectWrapper name='severity' label='Select Severity' options={['Minor','Major','Critical']}/>
+                                    <SelectWrapper name='severity' label='Select Severity' options={['Minor', 'Major', 'Critical']} />
                                 </Grid>
 
                                 <Grid item xs={12}>
-                                    <SelectWrapper name='status' label='Select Status' options={['Open','In Progress','Closed']}/>
+                                    <SelectWrapper name='status' label='Select Status' options={['Open', 'In Progress', 'Closed']} />
                                 </Grid>
-                                
+
                                 <Grid item xs={12}>
                                     <TextWrapper name='cdate' label='Date Created' placeholder={issueToEdit.cdate} />
                                 </Grid>
 
                                 <Grid item xs={12}>
-                                    <TextWrapper name='rdate' label='Date Closed' placeholder={issueToEdit.rdate}/>
+                                    <TextWrapper name='rdate' label='Date Closed' placeholder={issueToEdit.rdate} />
                                 </Grid>
-                            
+
                                 <Grid item xs={12}>
-                                    <ButtonWrapper disabled={submitting}>{ submitting==true?'Updating':'Update' }</ButtonWrapper>
+                                    <ButtonWrapper disabled={submitting}>{submitting === true ? 'Updating' : 'Update'}</ButtonWrapper>
                                 </Grid>
 
                             </Grid>
