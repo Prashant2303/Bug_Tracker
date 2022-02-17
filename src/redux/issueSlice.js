@@ -25,13 +25,13 @@ export const getIssuesThunk = createAsyncThunk(
 
 export const addIssueThunk = createAsyncThunk(
   'addIssue',
-  async (issue) => {
+  async (issue, { rejectWithValue }) => {
     try {
       const response = await axios.post(`${base_url}/issues`, issue)
       return response.data;
     }
     catch (error) {
-      console.error(error);
+      return rejectWithValue()  //To handle api errors, return rejectWithValue and use unwrap on dispatch to access this reject
     }
   }
 )
@@ -66,13 +66,14 @@ export const updateViewCountThunk = createAsyncThunk(
 
 export const updateIssueThunk = createAsyncThunk(
   'updateIssue',
-  async (issue) => {
+  async (issue, {rejectWithValue}) => {
     try {
       const response = await axios.put(`${base_url}/issues/${issue.id}`, issue);
       return response;
     }
     catch (error) {
       console.log(error);
+      return rejectWithValue();
     }
   }
 )

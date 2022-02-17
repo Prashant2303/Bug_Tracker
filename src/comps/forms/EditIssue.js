@@ -51,13 +51,15 @@ const EditIssue = () => {
                                 values.id = issueToEdit.id;
                                 try {
                                     unwrapResult(await dispatch(updateIssueThunk(values)));
-                                    setSubmitting(false);
                                     succ();
                                     history.push('/');
                                 }
                                 catch (error) {
-                                    console.log('Error', error);
+                                    console.log('Error - Http request failed');
                                     fail();
+                                }
+                                finally {
+                                    setSubmitting(false);
                                 }
                             }
                         }

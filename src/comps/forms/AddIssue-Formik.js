@@ -10,6 +10,7 @@ import useStyles from './FormStyle';
 import ButtonWrapper from './ButtonWrapper';
 import { Prompt, useHistory } from 'react-router-dom'
 import toast from 'react-hot-toast'
+import { unwrapResult } from '@reduxjs/toolkit';
 
 const AddIssueFormik = () => {
 
@@ -17,22 +18,13 @@ const AddIssueFormik = () => {
     const fail = () => toast.error('Something Went Wrong');
 
     const classes = useStyles();
-
+    const history = useHistory();
     const dispatch = useDispatch();
     const listInStore = useSelector(state => state.handler.list);
-    const history = useHistory();
-    // useEffect(()=>{
 
-    //     //https://dev.to/robmarshall/how-to-use-componentwillunmount-with-functional-components-in-react-2a5g
-    //     return () => {
-    //         // alert('You Sure ?')
-    //         console.log('Unmounting')
-    //     }
-    // },[])
-    //Error on page reload
-    // console.log('ListInStore '+JSON.stringify(listInStore));
     const [changed, setChanged] = useState(true)
     const [submitting, setSubmitting] = useState(false)
+
     return (
         <Paper className={classes.paper} xs={12} elevation={5}>
             <Prompt when={changed} message="Are you sure you want to leave?" />
@@ -64,14 +56,13 @@ const AddIssueFormik = () => {
                                 }
                                 values.id = maxId + 1;
                                 values.viewed = 1;
-                                await dispatch(addIssueThunk(values));
+                                unwrapResult(await dispatch(addIssueThunk(values)));
                                 setChanged(false);
-                                setSubmitting(false);
                                 history.push('/');
                                 succ();
                             }
                             catch (err) {
-                                console.log(err);
+                                console.log('Error - Http request failed');
                                 fail();
                             }
                             finally {
