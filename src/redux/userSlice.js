@@ -41,7 +41,13 @@ export const userSlice = createSlice({
       //},
     },
     login: (state, action) => {
+      localStorage.setItem('user',true);
       state.loginStatus = action.payload;
+      console.log(state.loginStatus);
+    },
+    logout: (state, action) => {
+      localStorage.removeItem('user');
+      state.loginStatus = false;
       console.log(state.loginStatus);
     }
   },
@@ -53,6 +59,6 @@ export const userSlice = createSlice({
   }
 })
 // Action creators are generated for each case reducer function
-export const { loadUsers, add, login } = userSlice.actions
+export const { loadUsers, add, login, logout } = userSlice.actions
 
 export default userSlice.reducer

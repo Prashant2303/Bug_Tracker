@@ -7,7 +7,7 @@ import { AppBar, Toolbar, IconButton, Menu, MenuItem, Badge, Button, Typography 
 import MoreIcon from '@material-ui/icons/MoreVert';
 import { NavLink } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { login } from '../redux/userSlice';
+import { login, logout } from '../redux/userSlice';
 import toast from 'react-hot-toast';
 
 const useStyles = makeStyles((theme) => ({
@@ -64,8 +64,8 @@ export default function MenuBar() {
   const dispatch = useDispatch();
 
   const handleLogout = () => {
-    localStorage.removeItem('user')
-    dispatch(login(false))
+    // localStorage.removeItem('user')
+    dispatch(logout())
     succ()
     // history.push('/');
   }
@@ -150,13 +150,13 @@ export default function MenuBar() {
       </MenuItem> */}
       {isLoggedIn?
         <MenuItem onClick={handleMenuClose}> <Button color="inherit" onClick={handleLogout}>Log Out</Button> </MenuItem>
-      :<>  
-       <MenuItem onClick={handleMenuClose}> <Button><NavLink exact activeClassName={classes.activeButton} className={classes.menuButtons} to="/login">Log In</NavLink></Button> </MenuItem>
-       <MenuItem onClick={handleMenuClose}> <Button><NavLink exact activeClassName={classes.activeButton} className={classes.menuButtons} to="/signup">Sign Up</NavLink></Button> </MenuItem>
+        :<>  
+       <MenuItem onClick={handleMenuClose}><NavLink exact activeClassName={classes.activeButton} className={classes.menuButtons} to="/signin">Sign In</NavLink> </MenuItem>
+       <MenuItem onClick={handleMenuClose}><NavLink exact activeClassName={classes.activeButton} className={classes.menuButtons} to="/login">Log In</NavLink> </MenuItem>
+       <MenuItem onClick={handleMenuClose}><NavLink exact activeClassName={classes.activeButton} className={classes.menuButtons} to="/signup">Sign Up</NavLink> </MenuItem>
       </>}
       <MenuItem onClick={handleMenuClose}> <Button><NavLink exact activeClassName={classes.activeButton} className={classes.menuButtons} to="/chart">Chart</NavLink></Button> </MenuItem>
       <MenuItem onClick={handleMenuClose}> <Button><NavLink exact activeClassName={classes.activeButton} className={classes.menuButtons} to="/about">About</NavLink></Button> </MenuItem>
-
     </Menu>
   );
 
@@ -170,6 +170,7 @@ export default function MenuBar() {
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
           
+          <Button><NavLink exact activeClassName={classes.activeButton} className={classes.menuButtons} to="/signin">SignIn</NavLink></Button>
           <Button><NavLink exact activeClassName={classes.activeButton} className={classes.menuButtons} to="/">Home</NavLink></Button>
           {isLoggedIn?<Button color="inherit" onClick={handleLogout}>Log Out</Button>:<>  
             <Button><NavLink exact activeClassName={classes.activeButton} className={classes.menuButtons} to="/login">Log In</NavLink></Button>
