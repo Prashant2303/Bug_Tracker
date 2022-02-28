@@ -64,10 +64,9 @@ export default function MenuBar() {
   const dispatch = useDispatch();
 
   const handleLogout = () => {
-    // localStorage.removeItem('user')
     dispatch(logout())
+    handleMenuClose()
     succ()
-    // history.push('/');
   }
 
   const classes = useStyles();
@@ -149,14 +148,14 @@ export default function MenuBar() {
         <p>Profile</p>
       </MenuItem> */}
       {isLoggedIn?
-        <MenuItem onClick={handleMenuClose}> <Button color="inherit" onClick={handleLogout}>Log Out</Button> </MenuItem>
+        <MenuItem onClick={handleLogout}> Sign Out </MenuItem>
         :<>  
        <MenuItem onClick={handleMenuClose}><NavLink exact activeClassName={classes.activeButton} className={classes.menuButtons} to="/signin">Sign In</NavLink> </MenuItem>
        <MenuItem onClick={handleMenuClose}><NavLink exact activeClassName={classes.activeButton} className={classes.menuButtons} to="/login">Log In</NavLink> </MenuItem>
        <MenuItem onClick={handleMenuClose}><NavLink exact activeClassName={classes.activeButton} className={classes.menuButtons} to="/signup">Sign Up</NavLink> </MenuItem>
       </>}
-      <MenuItem onClick={handleMenuClose}> <Button><NavLink exact activeClassName={classes.activeButton} className={classes.menuButtons} to="/chart">Chart</NavLink></Button> </MenuItem>
-      <MenuItem onClick={handleMenuClose}> <Button><NavLink exact activeClassName={classes.activeButton} className={classes.menuButtons} to="/about">About</NavLink></Button> </MenuItem>
+      <MenuItem onClick={handleMenuClose}><NavLink exact activeClassName={classes.activeButton} className={classes.menuButtons} to="/chart">Chart</NavLink></MenuItem>
+      <MenuItem onClick={handleMenuClose}><NavLink exact activeClassName={classes.activeButton} className={classes.menuButtons} to="/about">About</NavLink></MenuItem>
     </Menu>
   );
 

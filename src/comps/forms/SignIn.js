@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
-import { Avatar, Button, CssBaseline, TextField, Link, Grid, Typography, Container } from '@material-ui/core';
+import { Avatar, Button, CssBaseline, TextField, Link, Grid, Typography, Container, InputAdornment, IconButton } from '@material-ui/core';
+import { Visibility, VisibilityOff } from '@material-ui/icons';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { makeStyles } from '@material-ui/core/styles';
 import GoogleLogin from 'react-google-login';
-import { login } from '../../redux/userSlice';
+import { login, signupThunk, signinThunk } from '../../redux/userSlice';
 import { useDispatch } from 'react-redux';
 import toast from 'react-hot-toast';
 import { useHistory } from 'react-router-dom';
+import { unwrapResult } from '@reduxjs/toolkit';
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -28,6 +30,14 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+const initialFormData = {
+    firstName : '',
+    lastName : '',
+    email: '',
+    password: '',
+    confirmPassword: ''
+}
+
 export default function SignIn() {
     const classes = useStyles();
 
@@ -37,28 +47,58 @@ export default function SignIn() {
     const history = useHistory();
     const dispatch = useDispatch();
 
-    // const [submitting, setSubmitting] = useState(false)
     const [signup, setSignup] = useState(false);
+    const [formData, setFormData] = useState(initialFormData);
+    const [showPassword, setShowPassword] = useState(false);
+    const [submitting, setSubmitting] = useState(false);
+
     const switchmode = () => {
         setSignup((prevSignup) => !prevSignup);
     }
-    const handleSubmit = () => {
-        // alert('Hi');
+    
+    const handleShowPassword = () => {
+        setShowPassword(!showPassword);
     }
-    // const handleChange = () => {
-    //     // alert('Hi');
-    // }
+
+    const handleSubmit = async(e) => {
+        e.preventDefault();
+        setSubmitting(true);
+        try{
+            unwrapResult(await dispatch( signup? signupThunk(formData) : signinThunk(formData)));
+            history.push("/");
+            succ();
+        }
+        catch (error) {
+            console.log('AUTHENTICATION FAILED ',error);
+            fail();
+        }
+        finally {
+            setSubmitting(false);
+        }
+    }
+
+    const handleChange = (e) => {
+        setFormData({...formData, [e.target.name]: e.target.value});
+    }
+
     const googleSuccess = async(res) => {
         const profile = res?.profileObj;
         const token = res?.tokenId;
-        dispatch(login(true));
+        const authObj = {
+            profile,
+            token
+        }
+        console.log('authObj ', authObj);
+        dispatch(login(authObj));
         history.push("/");
         succ();
     }
+
     const googleFailure = (err) => {
         console.log('Google login failed ',err);
         fail();
     }
+    
     return (
         <Container component="main" maxWidth="xs">
             <CssBaseline />
@@ -75,27 +115,36 @@ export default function SignIn() {
                             <>
                                 <Grid container spacing={2}>
                                     <Grid item xs={12} sm={6}>
-                                        <TextField autoComplete="fname" name="firstName" variant="outlined" required fullWidth id="firstName" label="First Name" autoFocus
-                                        />
+                                        <TextField variant="outlined" required fullWidth id="firstName" label="First Name"  name="firstName"
+                                            autoComplete="firstname" autoFocus onChange={handleChange} />
                                     </Grid>
                                     <Grid item xs={12} sm={6}>
-                                        <TextField variant="outlined" required fullWidth id="lastName" label="Last Name" name="lastName" autoComplete="lname"
-                                        />
+                                        <TextField variant="outlined" required fullWidth id="lastName" label="Last Name" name="lastName"
+                                            autoComplete="lastname" onChange={handleChange} />
                                     </Grid>
                                 </Grid>
                             </> : null
                     }
-                    <TextField variant="outlined" margin="normal" required fullWidth id="email" label="Email Address" name="email" autoComplete="email" autoFocus
-                    />
-                    <TextField variant="outlined" margin="normal" required fullWidth name="password" label="Password" type="password" id="password" autoComplete="current-password"
+                    <TextField variant="outlined" margin="normal" required fullWidth id="email" label="Email Address" name="email" autoComplete="email" autoFocus onChange={handleChange}/>
+                    <TextField variant="outlined" margin="normal" required fullWidth name="password" label="Password" type={ showPassword ? "text" : "password" } id="password" autoComplete="current-password"  onChange={handleChange} 
+                    InputProps={
+                        {
+                            endAdornment:(
+                            <InputAdornment position="end">
+                              <IconButton onClick={handleShowPassword}>
+                                {showPassword ? <Visibility /> : <VisibilityOff />}
+                              </IconButton>
+                            </InputAdornment>
+                        )}
+                    }
                     />
                     {
                         signup ?
-                            <TextField variant="outlined" margin="normal" required fullWidth name="confirmpassword" label="Confirm Password" type="password" id="confirmpassword" autoComplete="current-password"
+                            <TextField variant="outlined" margin="normal" required fullWidth name="confirmPassword" label="Confirm Password" type="password" id="confirmPassword" autoComplete="current-password"  onChange={handleChange}
                             /> : null
                     }
-                    <Button type="submit" fullWidth variant="contained" color="primary" className={classes.submit}>
-                        {signup ? 'Sign Up' : 'Sign In'}
+                    <Button type="submit" fullWidth variant="contained" color="primary" className={classes.submit} disabled={submitting}>
+                        {signup ? submitting? 'Signing Up' : 'Sign Up' : submitting ? 'Signing In' : 'Sign In'}
                     </Button>
                     <GoogleLogin
                         clientId="621494010348-ljq9ja1nrrtc976603672tli08fkssno.apps.googleusercontent.com"

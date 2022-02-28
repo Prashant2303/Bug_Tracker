@@ -13,13 +13,13 @@ const Home = () => {
         dispatch(getUsersThunk());
         dispatch(getIssuesThunk());
         getUserFromSession();
-    })
+    },[])
 
     const getUserFromSession = () => {
-        const loggedInUser = localStorage.getItem("user");
-        console.log('From Session ',loggedInUser);
+        const loggedInUser = JSON.parse(localStorage.getItem("user"));
+        console.log('From session storage ',loggedInUser);
         if (loggedInUser) {
-            dispatch(login(true));
+            dispatch(login(loggedInUser));
         }
     }
     

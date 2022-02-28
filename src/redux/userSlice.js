@@ -2,6 +2,32 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
 import base_url from '../service/api'
 
+export const signupThunk = createAsyncThunk(
+  'signup',
+  async (formData, { rejectWithValue }) => {
+    try {
+      const response = await axios.post(`${base_url}/users/signup`, formData)
+      return response.data;
+    }
+    catch (error) {
+      return rejectWithValue()  //To handle api errors, return rejectWithValue and use unwrap on dispatch to access this reject
+    }
+  }
+)
+
+export const signinThunk = createAsyncThunk(
+  'signin',
+  async (formData, { rejectWithValue }) => {
+    try {
+      const response = await axios.post(`${base_url}/users/signin`, formData);
+      return response.data;
+    }
+    catch (error) {
+      return rejectWithValue()  //To handle api errors, return rejectWithValue and use unwrap on dispatch to access this reject
+    }
+  }
+)
+
 export const getUsersThunk = createAsyncThunk(
   'getUsers',
   async () => {
@@ -18,7 +44,8 @@ export const userSlice = createSlice({
   name: 'user',
   initialState: {
     list: [],
-    loginStatus: false
+    loginStatus: false,
+    authData: null
   },
   reducers: {
     loadUsers: (state, action) => {
@@ -41,21 +68,40 @@ export const userSlice = createSlice({
       //},
     },
     login: (state, action) => {
-      localStorage.setItem('user',true);
-      state.loginStatus = action.payload;
-      console.log(state.loginStatus);
+      localStorage.setItem('user',JSON.stringify(action.payload));
+      state.loginStatus = true;
+      state.authData = {
+        ...action.payload.profile,
+        token: action.payload.token
+      };
     },
     logout: (state, action) => {
       localStorage.removeItem('user');
       state.loginStatus = false;
-      console.log(state.loginStatus);
+      state.authData = null;
     }
   },
   extraReducers: {
     [getUsersThunk.fulfilled]: (state, action) => {
       console.log('IN EXTRA REDUCERS ' + action.payload);
       state.list = action.payload;
-    }
+    },
+    [signupThunk.fulfilled]: (state, action) => {
+      localStorage.setItem('user',JSON.stringify(action.payload));
+      state.loginStatus = true;
+      state.authData = {
+        ...action.payload.profile,
+        token: action.payload.token
+      };
+    },
+    [signinThunk.fulfilled]: (state, action) => {
+      localStorage.setItem('user',JSON.stringify(action.payload));
+      state.loginStatus = true;
+      state.authData = {
+        ...action.payload.profile,
+        token: action.payload.token
+      };
+    },
   }
 })
 // Action creators are generated for each case reducer function
