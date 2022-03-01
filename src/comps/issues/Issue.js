@@ -8,6 +8,7 @@ import { DeleteForeverRounded, EditRounded, LaunchRounded } from '@material-ui/i
 import toast from 'react-hot-toast';
 import Loading from '../Loading';
 import { unwrapResult } from '@reduxjs/toolkit'
+import { format } from 'date-fns'
 
 const useStyles = makeStyles({
     root: {
@@ -42,7 +43,7 @@ const Issue = ({ issue, displayProps }) => {
             succ();
         }
         catch (err) {
-            console.log('Delete Error ',err);
+            console.log('Delete Error ', err);
             fail()
         }
         finally {
@@ -134,13 +135,13 @@ const Issue = ({ issue, displayProps }) => {
                 {
                     displayProps.cdateSwitch === true ?
                         <Typography variant='h6' color="textPrimary">
-                            <span className={classes.span}>Created On - </span>{issue.cdate}
+                            <span className={classes.span}>Created On - </span>{format(new Date(issue.cdate), "PPP")}
                         </Typography> : null
                 }
                 {
                     displayProps.rdateSwitch === true && issue.status === 'Closed' ?
                         <Typography variant='h6' color="textPrimary">
-                            <span className={classes.span}>Closed On - </span>{issue.rdate}
+                            <span className={classes.span}>Closed On - </span>{format(new Date(issue.rdate), "PPP")}
                         </Typography> : null
                 }
             </CardContent>

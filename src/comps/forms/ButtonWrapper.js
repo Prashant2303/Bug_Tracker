@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button } from '@material-ui/core'
+import { Button, Grid } from '@material-ui/core'
 import { useFormikContext } from 'formik'
 
 const ButtonWrapper = ({
@@ -17,12 +17,15 @@ const ButtonWrapper = ({
         variant:'contained',
         color:'primary',
         fullWidth:true,
-        onClick: handleSubmit
+        onClick: handleSubmit,
+        ...otherProps
     }
     return(
-        <Button {...config}>
-            {children}
-        </Button>
+        <Grid item xs={12}>
+            <Button {...config}>
+                {children}
+            </Button>
+        </Grid>
     )
 }
 

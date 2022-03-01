@@ -21,7 +21,8 @@ const AddIssueFormik = () => {
     const history = useHistory();
     const dispatch = useDispatch();
     const listInStore = useSelector(state => state.handler.list);
-
+    const currentUser = useSelector(state => state.user.authData);
+    
     const [changed, setChanged] = useState(true)
     const [submitting, setSubmitting] = useState(false)
 
@@ -35,17 +36,12 @@ const AddIssueFormik = () => {
                         initialValues={{
                             desc: '',
                             severity: '',
-                            status: '',
-                            cdate: '',
-                            rdate: ''
+                            status: ''
                         }}
                         validationSchema={Yup.object({
                             desc: Yup.string().min(3, 'Must be 3 chars').required('Issue Description is required'),
                             severity: Yup.string().required('Required'),
-                            status: Yup.string().required('Required'),
-                            cdate: Yup.string().matches(/^(?:(?:31(\/|-|\.)(?:0?[13578]|1[02]))\1|(?:(?:29|30)(\/|-|\.)(?:0?[13-9]|1[0-2])\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:29(\/|-|\.)0?2\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\d|2[0-8])(\/|-|\.)(?:(?:0?[1-9])|(?:1[0-2]))\4(?:(?:1[6-9]|[2-9]\d)?\d{2})$/, 'Date should be Valid and in dd/mm/yyyy or dd-mm-yyyy format').required('Required'),
-                            rdate: Yup.string().matches(/^(?:(?:31(\/|-|\.)(?:0?[13578]|1[02]))\1|(?:(?:29|30)(\/|-|\.)(?:0?[13-9]|1[0-2])\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:29(\/|-|\.)0?2\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\d|2[0-8])(\/|-|\.)(?:(?:0?[1-9])|(?:1[0-2]))\4(?:(?:1[6-9]|[2-9]\d)?\d{2})$/, 'Date should be Valid and in dd/mm/yyyy or dd-mm-yyyy format')
-                            //https://stackoverflow.com/questions/15491894/regex-to-validate-date-format-dd-mm-yyyy
+                            status: Yup.string().required('Required')
                         })}
                         onSubmit={async (values) => {
                             setSubmitting(true);
@@ -56,6 +52,10 @@ const AddIssueFormik = () => {
                                 }
                                 values.id = maxId + 1;
                                 values.viewed = 1;
+                                values.title = '';
+                                values.creatorName = currentUser.name;
+                                values.creatorId = currentUser._id;
+                                values.cdate = new Date().toString();
                                 unwrapResult(await dispatch(addIssueThunk(values)));
                                 setChanged(false);
                                 history.push('/');
@@ -73,31 +73,10 @@ const AddIssueFormik = () => {
 
                         <Form>
                             <Grid container spacing={2}>
-
-                                <Grid item xs={12}>
-                                    <TextWrapper name='desc' label='Description' />
-                                </Grid>
-
-                                <Grid item xs={12}>
-                                    <SelectWrapper name='severity' label='Select Severity' options={['Minor', 'Major', 'Critical']} />
-                                </Grid>
-
-                                <Grid item xs={12}>
-                                    <SelectWrapper name='status' label='Select Status' options={['Open', 'In Progress', 'Closed']} />
-                                </Grid>
-
-                                <Grid item xs={12}>
-                                    <TextWrapper name='cdate' label='Date Created' />
-                                </Grid>
-
-                                <Grid item xs={12}>
-                                    <TextWrapper name='rdate' label='Date Closed' />
-                                </Grid>
-
-                                <Grid item xs={12}>
-                                    <ButtonWrapper disabled={submitting}> {submitting === true ? 'Adding' : 'Add'} </ButtonWrapper>
-                                </Grid>
-
+                                <TextWrapper name='desc' label='Description' />
+                                <SelectWrapper name='severity' label='Select Severity' options={['Minor', 'Major', 'Critical']} />
+                                <SelectWrapper name='status' label='Select Status' options={['Open', 'In Progress', 'Closed']} />
+                                <ButtonWrapper disabled={submitting}> {submitting === true ? 'Adding' : 'Add'} </ButtonWrapper>
                             </Grid>
                         </Form>
                     </Formik>

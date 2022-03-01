@@ -1,5 +1,5 @@
 import React from 'react'
-import {TextField} from '@material-ui/core'
+import {Grid, TextField} from '@material-ui/core'
 import { useField } from 'formik';
 
 const TextWrapper = ({name, ...otherProps}) => {
@@ -19,7 +19,9 @@ const TextWrapper = ({name, ...otherProps}) => {
     }
 
     return (
-        <TextField {...config} />
+        <Grid item xs={12}>
+            <TextField {...config} />
+        </Grid>
     )
 }
 
