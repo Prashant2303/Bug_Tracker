@@ -60,7 +60,6 @@ export default function MenuBar() {
   // const fail = () => toast.error('Something Went Wrong');
 
   const isLoggedIn = useSelector(state => state.user.loginStatus);
-  console.log(isLoggedIn)
   const dispatch = useDispatch();
 
   const handleLogout = () => {
@@ -147,13 +146,11 @@ export default function MenuBar() {
         </IconButton>
         <p>Profile</p>
       </MenuItem> */}
-      {isLoggedIn ?
-        <MenuItem onClick={handleLogout}>Sign out</MenuItem>
-        : <>
-          <MenuItem onClick={handleMenuClose}><NavLink exact activeClassName={classes.activeButton} className={classes.menuButtons} to="/signin">Sign In</NavLink> </MenuItem>
-          <MenuItem onClick={handleMenuClose}><NavLink exact activeClassName={classes.activeButton} className={classes.menuButtons} to="/login">Log In</NavLink> </MenuItem>
-          <MenuItem onClick={handleMenuClose}><NavLink exact activeClassName={classes.activeButton} className={classes.menuButtons} to="/signup">Sign Up</NavLink> </MenuItem>
-        </>}
+      {
+        isLoggedIn
+          ? <MenuItem onClick={handleLogout}>Sign out</MenuItem>
+          : <MenuItem onClick={handleMenuClose}><NavLink exact activeClassName={classes.activeButton} className={classes.menuButtons} to="/signin">Sign In</NavLink> </MenuItem>
+      }
       <MenuItem onClick={handleMenuClose}><NavLink exact activeClassName={classes.activeButton} className={classes.menuButtons} to="/chart">Chart</NavLink></MenuItem>
       <MenuItem onClick={handleMenuClose}><NavLink exact activeClassName={classes.activeButton} className={classes.menuButtons} to="/about">About</NavLink></MenuItem>
     </Menu>
@@ -169,12 +166,12 @@ export default function MenuBar() {
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
 
-            <Button><NavLink exact activeClassName={classes.activeButton} className={classes.menuButtons} to="/signin">Sign In</NavLink></Button>
             <Button><NavLink exact activeClassName={classes.activeButton} className={classes.menuButtons} to="/">Home</NavLink></Button>
-            {isLoggedIn ? <Button color="inherit" onClick={handleLogout}>Sign Out</Button> : <>
-              <Button><NavLink exact activeClassName={classes.activeButton} className={classes.menuButtons} to="/login">Log In</NavLink></Button>
-              <Button><NavLink exact activeClassName={classes.activeButton} className={classes.menuButtons} to="/signup">Sign Up</NavLink></Button>
-            </>}
+            {
+              isLoggedIn
+                ? <Button color="inherit" onClick={handleLogout}>Sign Out</Button>
+                : <Button><NavLink exact activeClassName={classes.activeButton} className={classes.menuButtons} to="/signin">Sign In</NavLink></Button>
+            }
             <Button><NavLink exact activeClassName={classes.activeButton} className={classes.menuButtons} to="/chart">Chart</NavLink></Button>
             <Button><NavLink exact activeClassName={classes.activeButton} className={classes.menuButtons} to="/about">About</NavLink></Button>
 

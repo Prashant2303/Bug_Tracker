@@ -6,7 +6,7 @@ import { Grid, Paper, Container } from '@material-ui/core';
 import ButtonWrapper from './ButtonWrapper';
 import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
-import { add, login } from '../../redux/userSlice';
+// import { add, login } from '../../redux/userSlice';
 import base_url from '../../service/api';
 import useStyles from './FormStyle';
 import { useHistory } from 'react-router-dom';
@@ -74,10 +74,10 @@ const Signup = () => {
                                 axios.post(`${base_url}/users`,values).then(
                                     (response) => {
                                         console.log('Before Add '+ JSON.stringify(userList));
-                                        dispatch(add(values));
+                                        // dispatch(add(values));
 
                                         localStorage.setItem('user',true);
-                                        dispatch(login(alreadyExist));
+                                        // dispatch(login(alreadyExist));
 
                                         setSubmitting(false)
                                         // alert('User Added Succesfully')

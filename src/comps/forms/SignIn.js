@@ -5,7 +5,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { makeStyles } from '@material-ui/core/styles';
 import GoogleLogin from 'react-google-login';
 import Icon from './Icon';
-import { login, signupThunk, signinThunk } from '../../redux/userSlice';
+import { localSignin, signupThunk, signinThunk } from '../../redux/userSlice';
 import { useDispatch } from 'react-redux';
 import toast from 'react-hot-toast';
 import { useHistory } from 'react-router-dom';
@@ -46,7 +46,7 @@ export default function SignIn() {
     const classes = useStyles();
 
     const succ = () => toast.success('Logged In Successfully');
-    const fail = () => toast.error('Something Went Wrong');
+    const fail = (message = 'Something went wrong') => toast.error(message);
 
     const history = useHistory();
     const dispatch = useDispatch();
@@ -73,8 +73,7 @@ export default function SignIn() {
             succ();
         }
         catch (error) {
-            console.log('AUTHENTICATION FAILED ', error);
-            fail();
+            fail(error?.response?.data?.message);
         }
         finally {
             setSubmitting(false);
@@ -87,13 +86,15 @@ export default function SignIn() {
 
     const googleSuccess = async (res) => {
         const profile = res?.profileObj;
-        const token = res?.tokenId;
         const authObj = {
-            profile,
-            token
+            result: {
+                name: profile.name,
+                email: profile.email,
+                _id: profile.googleId
+            },
+            token: res?.tokenId
         }
-        console.log('authObj ', authObj);
-        dispatch(login(authObj));
+        dispatch(localSignin(authObj));
         history.push("/");
         succ();
     }
