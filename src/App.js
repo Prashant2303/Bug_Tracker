@@ -10,6 +10,7 @@ import { useSelector } from 'react-redux';
 import VerticalBar from './comps/Chart';
 import MenuBar from './comps/MenuBar';
 import { Toaster } from 'react-hot-toast';
+import SignIn from './comps/forms/SignIn';
 const AddIssueFormik = lazy(() => import('./comps/forms/AddIssue-Formik'));
 const IssueDetail = lazy(() => import('./comps/issues/IssueDetail'));
 const EditIssue = lazy(() => import('./comps/forms/EditIssue'));
@@ -57,6 +58,7 @@ function App() {
         <Route path='/editIssue' exact><EditIssue /></Route>
         <Route path='/login' exact><Login /></Route>
         <Route path='/chart' exact><VerticalBar /></Route>
+        <Route path='/signin' exact><SignIn /></Route>
         {/* <Route path='/menu' exact><MenuBar /></Route> */}
 
       </Router>

@@ -7,7 +7,7 @@ import { AppBar, Toolbar, IconButton, Menu, MenuItem, Badge, Button, Typography 
 import MoreIcon from '@material-ui/icons/MoreVert';
 import { NavLink } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { login } from '../redux/userSlice';
+import { logout } from '../redux/userSlice';
 import toast from 'react-hot-toast';
 
 const useStyles = makeStyles((theme) => ({
@@ -43,14 +43,14 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   menuButtons: {
-    color:'black',
+    color: 'black',
     [theme.breakpoints.up('md')]: {
       color: 'white',
     },
-    textDecoration:'none'
+    textDecoration: 'none'
   },
-  activeButton:{
-    color:'lightgrey'
+  activeButton: {
+    color: 'lightgrey'
   }
 }));
 
@@ -59,15 +59,13 @@ export default function MenuBar() {
   const succ = () => toast.success('Logged Out Successfully');
   // const fail = () => toast.error('Something Went Wrong');
 
-  const isLoggedIn = useSelector(state=>state.user.loginStatus);
-  console.log(isLoggedIn)
+  const isLoggedIn = useSelector(state => state.user.loginStatus);
   const dispatch = useDispatch();
 
   const handleLogout = () => {
-    localStorage.removeItem('user')
-    dispatch(login(false))
+    dispatch(logout())
+    handleMenuClose()
     succ()
-    // history.push('/');
   }
 
   const classes = useStyles();
@@ -148,15 +146,13 @@ export default function MenuBar() {
         </IconButton>
         <p>Profile</p>
       </MenuItem> */}
-      {isLoggedIn?
-        <MenuItem onClick={handleMenuClose}> <Button color="inherit" onClick={handleLogout}>Log Out</Button> </MenuItem>
-      :<>  
-       <MenuItem onClick={handleMenuClose}> <Button><NavLink exact activeClassName={classes.activeButton} className={classes.menuButtons} to="/login">Log In</NavLink></Button> </MenuItem>
-       <MenuItem onClick={handleMenuClose}> <Button><NavLink exact activeClassName={classes.activeButton} className={classes.menuButtons} to="/signup">Sign Up</NavLink></Button> </MenuItem>
-      </>}
-      <MenuItem onClick={handleMenuClose}> <Button><NavLink exact activeClassName={classes.activeButton} className={classes.menuButtons} to="/chart">Chart</NavLink></Button> </MenuItem>
-      <MenuItem onClick={handleMenuClose}> <Button><NavLink exact activeClassName={classes.activeButton} className={classes.menuButtons} to="/about">About</NavLink></Button> </MenuItem>
-
+      {
+        isLoggedIn
+          ? <MenuItem onClick={handleLogout}>Sign out</MenuItem>
+          : <MenuItem onClick={handleMenuClose}><NavLink exact activeClassName={classes.activeButton} className={classes.menuButtons} to="/signin">Sign In</NavLink> </MenuItem>
+      }
+      <MenuItem onClick={handleMenuClose}><NavLink exact activeClassName={classes.activeButton} className={classes.menuButtons} to="/chart">Chart</NavLink></MenuItem>
+      <MenuItem onClick={handleMenuClose}><NavLink exact activeClassName={classes.activeButton} className={classes.menuButtons} to="/about">About</NavLink></MenuItem>
     </Menu>
   );
 
@@ -165,19 +161,20 @@ export default function MenuBar() {
       <AppBar position="static">
         <Toolbar>
           <Typography variant="h6">
-              <NavLink exact activeClassName="active" style={{color:'white',textDecorationLine:'none'}} to="/">Bug Tracker</NavLink>
+            <NavLink exact activeClassName="active" style={{ color: 'white', textDecorationLine: 'none' }} to="/">Bug Tracker</NavLink>
           </Typography>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
-          
-          <Button><NavLink exact activeClassName={classes.activeButton} className={classes.menuButtons} to="/">Home</NavLink></Button>
-          {isLoggedIn?<Button color="inherit" onClick={handleLogout}>Log Out</Button>:<>  
-            <Button><NavLink exact activeClassName={classes.activeButton} className={classes.menuButtons} to="/login">Log In</NavLink></Button>
-            <Button><NavLink exact activeClassName={classes.activeButton} className={classes.menuButtons} to="/signup">Sign Up</NavLink></Button>
-          </>}
-          <Button><NavLink exact activeClassName={classes.activeButton} className={classes.menuButtons} to="/chart">Chart</NavLink></Button>
-          <Button><NavLink exact activeClassName={classes.activeButton} className={classes.menuButtons} to="/about">About</NavLink></Button>
- 
+
+            <Button><NavLink exact activeClassName={classes.activeButton} className={classes.menuButtons} to="/">Home</NavLink></Button>
+            {
+              isLoggedIn
+                ? <Button color="inherit" onClick={handleLogout}>Sign Out</Button>
+                : <Button><NavLink exact activeClassName={classes.activeButton} className={classes.menuButtons} to="/signin">Sign In</NavLink></Button>
+            }
+            <Button><NavLink exact activeClassName={classes.activeButton} className={classes.menuButtons} to="/chart">Chart</NavLink></Button>
+            <Button><NavLink exact activeClassName={classes.activeButton} className={classes.menuButtons} to="/about">About</NavLink></Button>
+
             {/* <IconButton
               edge="end"
               aria-label="account of current user"

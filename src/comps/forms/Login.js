@@ -7,7 +7,7 @@ import TextWrapper from './TextWrapper';
 import ButtonWrapper from './ButtonWrapper';
 // import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
-import { login } from '../../redux/userSlice';
+// import { login } from '../../redux/userSlice';
 import { useHistory } from 'react-router-dom';
 // import base_url from '../service/api';
 import toast from 'react-hot-toast';
@@ -56,7 +56,7 @@ const Login = () => {
                             if(result===true)
                             {
                                 localStorage.setItem('user',true);
-                                dispatch(login(result));
+                                // dispatch(login(result));
                                 setSubmitting(false)
                                 history.push("/");
                                 succ();

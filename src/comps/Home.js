@@ -3,26 +3,25 @@ import { Container } from '@material-ui/core';
 import IssuesList from './issues/IssuesList';
 import { useDispatch } from 'react-redux';
 import { getIssuesThunk } from '../redux/issueSlice';
-import { login, getUsersThunk } from '../redux/userSlice';
+import { localSignin } from '../redux/userSlice';
 
 const Home = () => {
 
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(getUsersThunk());
         dispatch(getIssuesThunk());
         getUserFromSession();
-    })
+    }, [])
 
     const getUserFromSession = () => {
-        const loggedInUser = localStorage.getItem("user");
-        console.log('From Session ',loggedInUser);
+        const loggedInUser = JSON.parse(localStorage.getItem("user"));
+        console.log('Current User', loggedInUser);
         if (loggedInUser) {
-            dispatch(login(true));
+            dispatch(localSignin(loggedInUser));
         }
     }
-    
+
     return (
         <>
             <Container>

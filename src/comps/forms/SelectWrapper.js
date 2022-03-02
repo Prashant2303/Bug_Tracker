@@ -1,5 +1,5 @@
 import React from 'react'
-import { TextField, MenuItem } from '@material-ui/core'
+import { TextField, MenuItem, Grid } from '@material-ui/core'
 import { useField } from 'formik';
 
 const SelectWrapper = ({ name, options, ...otherProps }) => {
@@ -19,15 +19,17 @@ const SelectWrapper = ({ name, options, ...otherProps }) => {
     }
 
     return (
-        <TextField select value='Select' style={{textAlign:'left'}} {...config} >
-            {
-                Object.keys(options).map((pos, option)=>{
-                    return(
-                        <MenuItem key={pos} value={options[pos]}>{options[pos]}</MenuItem>
-                    )
-                })
-            }
-        </TextField>
+        <Grid item xs={12}>
+            <TextField select value='Select' style={{textAlign:'left'}} {...config} >
+                {
+                    Object.keys(options).map((pos, option)=>{
+                        return(
+                            <MenuItem key={pos} value={options[pos]}>{options[pos]}</MenuItem>
+                        )
+                    })
+                }
+            </TextField>
+        </Grid>
     )
 }
 

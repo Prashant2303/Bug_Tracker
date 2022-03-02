@@ -67,35 +67,13 @@ const EditIssue = () => {
 
                         <Form>
                             <Grid container spacing={2}>
-
-                                <Grid item xs={12}>
-                                    <TextWrapper name='id' label='Id' value={issueToEdit.id} disabled />
-                                </Grid>
-
-                                <Grid item xs={12}>
-                                    <TextWrapper name='desc' label='Description' placeholder={issueToEdit.desc} />
-                                </Grid>
-
-                                <Grid item xs={12}>
-                                    <SelectWrapper name='severity' label='Select Severity' options={['Minor', 'Major', 'Critical']} />
-                                </Grid>
-
-                                <Grid item xs={12}>
-                                    <SelectWrapper name='status' label='Select Status' options={['Open', 'In Progress', 'Closed']} />
-                                </Grid>
-
-                                <Grid item xs={12}>
-                                    <TextWrapper name='cdate' label='Date Created' placeholder={issueToEdit.cdate} />
-                                </Grid>
-
-                                <Grid item xs={12}>
-                                    <TextWrapper name='rdate' label='Date Closed' placeholder={issueToEdit.rdate} />
-                                </Grid>
-
-                                <Grid item xs={12}>
-                                    <ButtonWrapper disabled={submitting}>{submitting === true ? 'Updating' : 'Update'}</ButtonWrapper>
-                                </Grid>
-
+                                <TextWrapper name='id' label='Id' value={issueToEdit.id} disabled />
+                                <TextWrapper name='desc' label='Description' placeholder={issueToEdit.desc} />
+                                <SelectWrapper name='severity' label='Select Severity' options={['Minor', 'Major', 'Critical']} />
+                                <SelectWrapper name='status' label='Select Status' options={['Open', 'In Progress', 'Closed']} />
+                                <TextWrapper name='cdate' label='Date Created' placeholder={issueToEdit.cdate} />
+                                <TextWrapper name='rdate' label='Date Closed' placeholder={issueToEdit.rdate} />
+                                <ButtonWrapper disabled={submitting}>{submitting === true ? 'Updating' : 'Update'}</ButtonWrapper>
                             </Grid>
                         </Form>
                     </Formik>

@@ -8,6 +8,7 @@ import { DeleteForeverRounded, EditRounded, LaunchRounded } from '@material-ui/i
 import toast from 'react-hot-toast';
 import Loading from '../Loading';
 import { unwrapResult } from '@reduxjs/toolkit'
+import { format } from 'date-fns'
 
 const useStyles = makeStyles({
     root: {
@@ -27,9 +28,11 @@ const Issue = ({ issue, displayProps }) => {
 
     const succ = () => toast.success('Issue deleted');
     const fail = () => toast.error('Issue could not be deleted');
-    const loginRequiredToast = () => toast('Login Required');
+    const loginRequiredToast = (message) => toast(message);
 
     const isLoggedIn = useSelector(state => state.user.loginStatus);
+    const currentUser = useSelector(state => state.user.authData);
+    
     const classes = useStyles();
     const dispatch = useDispatch();
     const [loading, setLoading] = useState(false);
@@ -42,7 +45,7 @@ const Issue = ({ issue, displayProps }) => {
             succ();
         }
         catch (err) {
-            console.log('Delete Error ',err);
+            console.log('Delete Error ', err);
             fail()
         }
         finally {
@@ -78,7 +81,11 @@ const Issue = ({ issue, displayProps }) => {
     const handleDelete = (e) => {
         if (isLoggedIn === false) {
             e.preventDefault();
-            loginRequiredToast();
+            loginRequiredToast('Login required');
+        }
+        else if (currentUser._id !== issue.creatorId) {
+            e.preventDefault();
+            loginRequiredToast('You can only delete issues created by you');
         }
         else
             delIssue(issue.id)
@@ -98,7 +105,7 @@ const Issue = ({ issue, displayProps }) => {
                         </IconButton>
 
                         <IconButton aria-label="Delete" onClick={handleDelete}>
-                            <DeleteForeverRounded color={isLoggedIn ? 'error' : 'disabled'} />
+                            <DeleteForeverRounded color={isLoggedIn ? currentUser._id === issue.creatorId ? 'error' : 'disabled' : 'disabled'} />
                         </IconButton>
 
                         <IconButton aria-label="Details">
@@ -134,13 +141,13 @@ const Issue = ({ issue, displayProps }) => {
                 {
                     displayProps.cdateSwitch === true ?
                         <Typography variant='h6' color="textPrimary">
-                            <span className={classes.span}>Created On - </span>{issue.cdate}
+                            <span className={classes.span}>Created On - </span>{format(new Date(issue.cdate), "PPP")}
                         </Typography> : null
                 }
                 {
                     displayProps.rdateSwitch === true && issue.status === 'Closed' ?
                         <Typography variant='h6' color="textPrimary">
-                            <span className={classes.span}>Closed On - </span>{issue.rdate}
+                            <span className={classes.span}>Closed On - </span>{format(new Date(issue.rdate), "PPP")}
                         </Typography> : null
                 }
             </CardContent>
