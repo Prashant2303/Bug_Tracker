@@ -39,8 +39,12 @@ export const addIssueThunk = createAsyncThunk(
 export const delIssueThunk = createAsyncThunk(
   'delIssue',
   async (id, { rejectWithValue }) => {
+    const currentUser = JSON.parse(localStorage.getItem('user'));
+    const config = {
+      headers: { authorization: `Bearer ${currentUser.token}` }
+    };
     try {
-      await axios.delete(`${base_url}/issues/${id}`)
+      await axios.delete(`${base_url}/issues/${id}`, config)
       return id;
     }
     catch (error) {
