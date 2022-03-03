@@ -32,6 +32,10 @@ const useStyles = makeStyles((theme) => ({
     googleButton: {
         marginBottom: theme.spacing(2),
     },
+    footer: {
+        position: 'fixed',
+        bottom: '10px'
+    }
 }));
 
 const initialFormData = {
@@ -167,6 +171,7 @@ export default function SignIn() {
                             {signup ? "Already have an account? Sign in" : "Don't have an account? Sign Up"}
                         </Link>
                     </Grid>
+                    <footer className={classes.footer}>* If you are unable to sign in using google, clear browser cache.</footer>
                 </form>
             </div>
         </Container>
