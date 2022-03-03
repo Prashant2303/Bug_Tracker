@@ -62,6 +62,7 @@ export default function IssuesList() {
     descSwitch: true,
     cdateSwitch: true,
     rdateSwitch: true,
+    creatorSwitch: true
   });
 
   const handleChange = (event) => {
@@ -78,10 +79,6 @@ export default function IssuesList() {
       <Grid container style={{ marginBottom: '1em' }}>
 
         <Grid className='switch' container xs={6} sm={4}>
-          Title<Switch checked={state.descSwitch} name="descSwitch" color='primary' onChange={handleChange} />
-        </Grid>
-
-        <Grid className='switch' container xs={6} sm={4}>
           Description<Switch checked={state.descSwitch} name="descSwitch" color='primary' onChange={handleChange} />
         </Grid>
 
@@ -93,6 +90,10 @@ export default function IssuesList() {
           Status<Switch checked={state.statusSwitch} name="statusSwitch" color='primary' onChange={handleChange} />
         </Grid>
 
+        <Grid className='switch' container xs={6} sm={4}>
+          Creator<Switch checked={state.creatorSwitch} name="creatorSwitch" color='primary' onChange={handleChange} />
+        </Grid>
+        
         <Grid className='switch' container xs={6} sm={4}>
           Created<Switch checked={state.cdateSwitch} name="cdateSwitch" color='primary' onChange={handleChange} />
         </Grid>
@@ -127,6 +128,7 @@ export default function IssuesList() {
       <Grid item xs={12} md={1}>
         <h3 style={{ fontWeight: '500' }}>Filters</h3>
       </Grid>
+
       <Grid item xs={6} sm={4} md={1}>
         <FormControlLabel control={<Switch checked={state.descSwitch} name="descSwitch" color='primary' onChange={handleChange} />}
           label="Description" />
@@ -140,6 +142,11 @@ export default function IssuesList() {
       <Grid item xs={6} sm={4} md={1}>
         <FormControlLabel control={<Switch checked={state.statusSwitch} name="statusSwitch" color='primary' onChange={handleChange} />}
           label="Status" />
+      </Grid>
+
+      <Grid item xs={6} sm={4} md={1}>
+        <FormControlLabel control={<Switch checked={state.creatorSwitch} name="creatorSwitch" color='primary' onChange={handleChange} />}
+          label="Creator" />
       </Grid>
 
       <Grid item xs={6} sm={4} md={1}>

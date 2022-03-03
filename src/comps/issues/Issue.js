@@ -139,6 +139,12 @@ const Issue = ({ issue, displayProps }) => {
                         </Typography> : null
                 }
                 {
+                    displayProps.creatorSwitch === true ?
+                        <Typography variant='h6' color="textPrimary">
+                            <span className={classes.span}>Created By - </span>{issue.creatorName}
+                        </Typography> : null
+                }
+                {
                     displayProps.cdateSwitch === true ?
                         <Typography variant='h6' color="textPrimary">
                             <span className={classes.span}>Created On - </span>{format(new Date(issue.cdate), "PPP")}
