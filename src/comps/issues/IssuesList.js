@@ -1,19 +1,18 @@
 import React from 'react';
-import { Button, Grid, TextField, FormControlLabel, Switch } from '@material-ui/core';
+import { Button, Grid, TextField, FormControlLabel, Switch, useMediaQuery } from '@material-ui/core';
 import Issue from './Issue';
 import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom'
 import Fuse from 'fuse.js';
 import { useState, useEffect } from 'react';
 import Loading from '../Loading';
+import './issueList.css';
 
 export default function IssuesList() {
 
+  const isDesktop = useMediaQuery('(min-width:900px)');
   const storedata = useSelector(state => state.handler.list);
-  // console.log('This data is fetched from store' + JSON.stringify(storedata));
   const isLoading = useSelector(state => state.handler.isLoading);
-  // const isLoggedIn = useSelector(state=>state.user.loginStatus);
-  // console.log(isLoggedIn);
 
   //combining redux state n localstate - https://stackoverflow.com/questions/57010278/how-can-we-use-redux-state-in-usestate-to-set-initial-values
   useEffect(() => {
@@ -26,7 +25,6 @@ export default function IssuesList() {
 
   const handleSearch = (event) => {
 
-    // console.log(JSON.stringify(data))
     event.preventDefault();
     let query = event.target.query.value;
 
@@ -70,13 +68,65 @@ export default function IssuesList() {
     setState({ ...state, [event.target.name]: event.target.checked });
   };
 
+  const renderMobileFilters = (
+    <Grid container direction="column" justify="space-around" alignItems="center" spacing={1} style={{ marginBottom: '1em' }}>
+
+      <Grid item xs={12}>
+        <h3 style={{ fontWeight: '500', margin: '0px' }}>Filters</h3>
+      </Grid>
+
+      <Grid container style={{ marginBottom: '1em' }}>
+
+        <Grid className='switch' container xs={6} sm={4}>
+          Title<Switch checked={state.descSwitch} name="descSwitch" color='primary' onChange={handleChange} />
+        </Grid>
+
+        <Grid className='switch' container xs={6} sm={4}>
+          Description<Switch checked={state.descSwitch} name="descSwitch" color='primary' onChange={handleChange} />
+        </Grid>
+
+        <Grid className='switch' container xs={6} sm={4}>
+          Severity<Switch checked={state.severitySwitch} name="severitySwitch" color='primary' onChange={handleChange} />
+        </Grid>
+
+        <Grid className='switch' container xs={6} sm={4}>
+          Status<Switch checked={state.statusSwitch} name="statusSwitch" color='primary' onChange={handleChange} />
+        </Grid>
+
+        <Grid className='switch' container xs={6} sm={4}>
+          Created<Switch checked={state.cdateSwitch} name="cdateSwitch" color='primary' onChange={handleChange} />
+        </Grid>
+
+        <Grid className='switch' container xs={6} sm={4}>
+          Closed<Switch checked={state.rdateSwitch} name="rdateSwitch" color='primary' onChange={handleChange} />
+        </Grid>
+      </Grid>
+
+      <Grid container justify='space-around'>
+        <Grid item id='backbtn' style={{ display: 'none' }}>
+          <Button  variant='outlined' onClick={() => goback()}>Back</Button>
+        </Grid>
+        <Grid item>
+          <form onSubmit={handleSearch}>
+            <TextField variant='outlined' label='Search' size='small' name='query' />
+          </form>
+        </Grid>
+
+        <Grid item>
+          <Button variant='contained' color='primary'>
+            <NavLink exact activeClassName="active" to="/addIssue" style={{ textDecoration: 'none', color: 'white', fontWeight: 'bold' }}>Add Issue</NavLink>
+          </Button>
+        </Grid>
+      </Grid>
+    </Grid>
+  )
+
   const renderFilters = (
     <Grid container direction="row" justify="space-between" alignItems="center" spacing={1} style={{ marginBottom: '1em' }}>
 
       <Grid item xs={12} md={1}>
         <h3 style={{ fontWeight: '500' }}>Filters</h3>
       </Grid>
-      {/* <h5>Sort</h5> */}
       <Grid item xs={6} sm={4} md={1}>
         <FormControlLabel control={<Switch checked={state.descSwitch} name="descSwitch" color='primary' onChange={handleChange} />}
           label="Description" />
@@ -123,7 +173,7 @@ export default function IssuesList() {
 
   return (
     <>
-      {renderFilters}
+      {isDesktop? renderFilters : renderMobileFilters}
       {isLoading ? <Loading /> : renderList}
     </>
   );
