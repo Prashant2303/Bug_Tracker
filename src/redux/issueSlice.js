@@ -8,10 +8,10 @@ export const getIssuesThunk = createAsyncThunk(
     try {
       const response = await axios.get(`${base_url}/issues`);
       const responseObject = {
-        response: response.data,
+        response: response.data.reverse(),
         isLoading: false
       }
-      // console.log('FROM THUNK ', response.data);
+      console.log('FROM THUNK ', response.data);
       return responseObject;
     } catch (error) {
       console.error(error);
