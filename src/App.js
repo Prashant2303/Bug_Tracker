@@ -4,8 +4,6 @@ import Home from './comps/Home';
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import { makeStyles } from '@material-ui/core/styles';
 import Loading from './comps/Loading';
-import Login from './comps/forms/Login';
-import Unauthorized from './comps/Unauthorized';
 import { useSelector } from 'react-redux';
 import VerticalBar from './comps/Chart';
 import MenuBar from './comps/MenuBar';
@@ -14,8 +12,12 @@ import SignIn from './comps/forms/SignIn';
 const AddIssueFormik = lazy(() => import('./comps/forms/AddIssue-Formik'));
 const IssueDetail = lazy(() => import('./comps/issues/IssueDetail'));
 const EditIssue = lazy(() => import('./comps/forms/EditIssue'));
-const Signup = lazy(() => import('./comps/forms/Signup'));
 const About = lazy(() => import('./comps/About'));
+
+const Login = lazy(() => import('./comps/forms/Login'));
+const Signup = lazy(() => import('./comps/forms/Signup'));
+const SignInNoFormik = lazy(() => import('./comps/forms/SignInNoFormik'));
+const Unauthorized = lazy(() => import('./comps/Unauthorized'));
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -52,15 +54,15 @@ function App() {
         <Route path='/' exact > <Home /> </Route>
         <Route path='/about' exact > <About /> </Route>
         <Route path='/issues' exact > <Home /> </Route>
-        <Route path='/addIssue' exact > {isLoggedIn ? <AddIssueFormik /> : <Unauthorized />} </Route>
+        <Route path='/addIssue' exact > {isLoggedIn ? <AddIssueFormik /> : <SignInNoFormik />} </Route>
         <Route path='/issueDetails' exact><IssueDetail /></Route>
-        <Route path='/signup' exact><Signup /></Route>
         <Route path='/editIssue' exact><EditIssue /></Route>
-        <Route path='/login' exact><Login /></Route>
         <Route path='/chart' exact><VerticalBar /></Route>
         <Route path='/signin' exact><SignIn /></Route>
-        {/* <Route path='/menu' exact><MenuBar /></Route> */}
-
+        <Route path='/login' exact><Login /></Route>
+        <Route path='/signup' exact><Signup /></Route>
+        <Route path='/signin2' exact><SignInNoFormik /></Route>
+        <Route path='/unauth' exact><Unauthorized /></Route>
       </Router>
     </Suspense>
   );

@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { Avatar, Button, CssBaseline, TextField, Link, Grid, Typography, Container, InputAdornment, IconButton } from '@material-ui/core';
-import { Visibility, VisibilityOff } from '@material-ui/icons';
+import { Avatar, Button, CssBaseline, Link, Grid, Typography, Container } from '@material-ui/core';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { makeStyles } from '@material-ui/core/styles';
 import GoogleLogin from 'react-google-login';
@@ -10,10 +9,20 @@ import { useDispatch } from 'react-redux';
 import toast from 'react-hot-toast';
 import { useHistory } from 'react-router-dom';
 import { unwrapResult } from '@reduxjs/toolkit';
+import { Formik, Form } from 'formik'
+import * as Yup from 'yup'
+import TextWrapper from './TextWrapper';
+import ButtonWrapper from './ButtonWrapper';
 
 const useStyles = makeStyles((theme) => ({
-    paper: {
+    paperSignin: {
         marginTop: theme.spacing(8),
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+    },
+    paperSignup: {
+        marginTop: theme.spacing(5),
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -27,24 +36,16 @@ const useStyles = makeStyles((theme) => ({
         marginTop: theme.spacing(1),
     },
     submit: {
-        margin: theme.spacing(3, 0, 2),
+        margin: theme.spacing(1, 0, 2),
     },
     googleButton: {
         marginBottom: theme.spacing(2),
     },
     footer: {
-        position: 'fixed',
+        position: 'absolute',
         bottom: '10px'
     }
 }));
-
-const initialFormData = {
-    firstName: '',
-    lastName: '',
-    email: '',
-    password: '',
-    confirmPassword: ''
-}
 
 export default function SignIn() {
     const classes = useStyles();
@@ -56,23 +57,16 @@ export default function SignIn() {
     const dispatch = useDispatch();
 
     const [signup, setSignup] = useState(false);
-    const [formData, setFormData] = useState(initialFormData);
-    const [showPassword, setShowPassword] = useState(false);
     const [submitting, setSubmitting] = useState(false);
 
     const switchmode = () => {
         setSignup((prevSignup) => !prevSignup);
     }
-
-    const handleShowPassword = () => {
-        setShowPassword(!showPassword);
-    }
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+    
+    const handleSubmit = async (values) => {
         setSubmitting(true);
         try {
-            unwrapResult(await dispatch(signup ? signupThunk(formData) : signinThunk(formData)));
+            unwrapResult(await dispatch(signup ? signupThunk(values) : signinThunk(values)));
             history.push("/");
             succ();
         }
@@ -82,10 +76,6 @@ export default function SignIn() {
         finally {
             setSubmitting(false);
         }
-    }
-
-    const handleChange = (e) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
     }
 
     const googleSuccess = async (res) => {
@@ -108,54 +98,75 @@ export default function SignIn() {
         fail();
     }
 
+    const renderSignin = (
+        <Formik
+            initialValues={{
+                email: '',
+                password: '',
+            }}
+            validationSchema={Yup.object({
+                email: Yup.string().email('Invalid email address').required('Required'),
+                password: Yup.string().min(8,'Must be 8 characters at least').required('Required')
+            })}
+            onSubmit={ values => handleSubmit(values) }
+        >
+        <Form>
+            <Grid container spacing={2}>
+                <TextWrapper name='email' label='Email' />
+                <TextWrapper name='password' label='Password' type="password" showVisibility />
+                <ButtonWrapper className={classes.submit} disabled={submitting}>
+                    {submitting ? 'Signing In':'Sign In'}
+                </ButtonWrapper>
+            </Grid>
+        </Form>
+        </Formik>
+    )
+
+    const renderSignup = (
+        <Formik
+            initialValues={{
+                firstname: '',
+                lastname: '',
+                email: '',
+                password: '',
+                confirmPassword: ''
+            }}
+            validationSchema={Yup.object({
+                firstname: Yup.string().max(20, 'Must be 20 characters or less').required('Required'),
+                lastname: Yup.string().max(20, 'Must be 20 characters or less').required('Required'),
+                email: Yup.string().email('Invalid email address').required('Required'),
+                password: Yup.string().min(8,'Must be 8 characters at least').required('Required'),
+                confirmPassword: Yup.string().oneOf([Yup.ref('password'),null], 'Passwords must match').required('Required')
+            })}
+            onSubmit={ values => handleSubmit(values) }
+        >
+        <Form>
+            <Grid container spacing={2}>
+                <TextWrapper sm={6} name='firstname' label='First Name' />
+                <TextWrapper sm={6} name='lastname' label='Last Name' />
+                <TextWrapper name='email' label='Email' />
+                <TextWrapper name='password' label='Password' type="password" showVisibility />
+                <TextWrapper name="confirmPassword" label="Confirm Password" type="password" />
+                <ButtonWrapper className={classes.submit} disabled={submitting}>
+                    {submitting ? 'Signing Up':'Sign Up'}
+                </ButtonWrapper>
+            </Grid>
+        </Form>
+        </Formik>
+    )
+
     return (
         <Container component="main" maxWidth="xs">
             <CssBaseline />
-            <div className={classes.paper}>
+            <div className={ signup ? classes.paperSignup : classes.paperSignin }>
                 <Avatar className={classes.avatar}>
                     <LockOutlinedIcon />
                 </Avatar>
-                <Typography component="h1" variant="h5">
+                <Typography component="h1" variant="h5" style={{marginBottom:'10px'}}>
                     {signup ? 'Sign Up' : 'Sign In'}
                 </Typography>
-                <form className={classes.form} noValidate onSubmit={handleSubmit}>
-                    {
-                        signup ?
-                            <>
-                                <Grid container spacing={2}>
-                                    <Grid item xs={12} sm={6}>
-                                        <TextField variant="outlined" required fullWidth id="firstName" label="First Name" name="firstName"
-                                            autoComplete="firstname" autoFocus onChange={handleChange} />
-                                    </Grid>
-                                    <Grid item xs={12} sm={6}>
-                                        <TextField variant="outlined" required fullWidth id="lastName" label="Last Name" name="lastName"
-                                            autoComplete="lastname" onChange={handleChange} />
-                                    </Grid>
-                                </Grid>
-                            </> : null
-                    }
-                    <TextField variant="outlined" margin="normal" required fullWidth id="email" label="Email Address" name="email" autoComplete="email" autoFocus onChange={handleChange} />
-                    <TextField variant="outlined" margin="normal" required fullWidth name="password" label="Password" type={showPassword ? "text" : "password"} id="password" autoComplete="current-password" onChange={handleChange}
-                        InputProps={
-                            {
-                                endAdornment: (
-                                    <InputAdornment position="end">
-                                        <IconButton onClick={handleShowPassword}>
-                                            {showPassword ? <Visibility /> : <VisibilityOff />}
-                                        </IconButton>
-                                    </InputAdornment>
-                                )
-                            }
-                        }
-                    />
-                    {
-                        signup ?
-                            <TextField variant="outlined" margin="normal" required fullWidth name="confirmPassword" label="Confirm Password" type="password" id="confirmPassword" autoComplete="current-password" onChange={handleChange}
-                            /> : null
-                    }
-                    <Button type="submit" fullWidth variant="contained" color="primary" className={classes.submit} disabled={submitting}>
-                        {signup ? submitting ? 'Signing Up' : 'Sign Up' : submitting ? 'Signing In' : 'Sign In'}
-                    </Button>
+                <form className={classes.form}>
+                    { signup ? renderSignup : renderSignin }
                     <GoogleLogin
                         clientId="621494010348-ljq9ja1nrrtc976603672tli08fkssno.apps.googleusercontent.com"
                         render={renderProps => (
@@ -171,9 +182,10 @@ export default function SignIn() {
                             {signup ? "Already have an account? Sign in" : "Don't have an account? Sign Up"}
                         </Link>
                     </Grid>
-                    <footer className={classes.footer}>* If you are unable to sign in using google, clear browser cache.</footer>
+                    
                 </form>
             </div>
+            <footer className={classes.footer}>* If you are unable to sign in using Google, clear browser cache.</footer>
         </Container>
     );
 }
