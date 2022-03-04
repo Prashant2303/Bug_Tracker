@@ -9,15 +9,16 @@ import VerticalBar from './comps/Chart';
 import MenuBar from './comps/MenuBar';
 import { Toaster } from 'react-hot-toast';
 import SignIn from './comps/forms/SignIn';
+import SignUp from './comps/forms/SignUp';
 const AddIssueFormik = lazy(() => import('./comps/forms/AddIssue-Formik'));
 const IssueDetail = lazy(() => import('./comps/issues/IssueDetail'));
 const EditIssue = lazy(() => import('./comps/forms/EditIssue'));
 const About = lazy(() => import('./comps/About'));
 
-const Login = lazy(() => import('./comps/forms/Login'));
-const Signup = lazy(() => import('./comps/forms/Signup'));
-const SignInNoFormik = lazy(() => import('./comps/forms/SignInNoFormik'));
-const Unauthorized = lazy(() => import('./comps/Unauthorized'));
+const Login = lazy(() => import('./comps/Old/Login'));
+const OldSignup = lazy(() => import('./comps/Old/OldSignup'));
+const Auth = lazy(() => import('./comps/Old/Auth'));
+const Unauthorized = lazy(() => import('./comps/Old/Unauthorized'));
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -54,14 +55,16 @@ function App() {
         <Route path='/' exact > <Home /> </Route>
         <Route path='/about' exact > <About /> </Route>
         <Route path='/issues' exact > <Home /> </Route>
-        <Route path='/addIssue' exact > {isLoggedIn ? <AddIssueFormik /> : <SignInNoFormik />} </Route>
+        <Route path='/addIssue' exact > {isLoggedIn ? <AddIssueFormik /> : <SignIn />} </Route>
         <Route path='/issueDetails' exact><IssueDetail /></Route>
         <Route path='/editIssue' exact><EditIssue /></Route>
         <Route path='/chart' exact><VerticalBar /></Route>
         <Route path='/signin' exact><SignIn /></Route>
+        <Route path='/signup' exact><SignUp /></Route>
+
         <Route path='/login' exact><Login /></Route>
-        <Route path='/signup' exact><Signup /></Route>
-        <Route path='/signin2' exact><SignInNoFormik /></Route>
+        <Route path='/oldsignup' exact><OldSignup /></Route>
+        <Route path='/auth' exact><Auth /></Route>
         <Route path='/unauth' exact><Unauthorized /></Route>
       </Router>
     </Suspense>

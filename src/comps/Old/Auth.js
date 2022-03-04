@@ -4,7 +4,7 @@ import { Visibility, VisibilityOff } from '@material-ui/icons';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { makeStyles } from '@material-ui/core/styles';
 import GoogleLogin from 'react-google-login';
-import Icon from './Icon';
+import Icon from '../forms/Icon';
 import { localSignin, signupThunk, signinThunk } from '../../redux/userSlice';
 import { useDispatch } from 'react-redux';
 import toast from 'react-hot-toast';
@@ -46,7 +46,7 @@ const initialFormData = {
     confirmPassword: ''
 }
 
-export default function SignInNoFormik() {
+export default function Auth() {
     const classes = useStyles();
 
     const succ = () => toast.success('Logged In Successfully');

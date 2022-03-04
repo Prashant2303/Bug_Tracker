@@ -1,10 +1,10 @@
 import React,{ useState } from 'react'
-import useStyles from './FormStyle';
+import useStyles from '../forms/FormStyle';
 import { Grid, Paper, Container } from '@material-ui/core';
 import { Formik, Form } from 'formik'
 import * as Yup from 'yup'
-import TextWrapper from './TextWrapper';
-import ButtonWrapper from './ButtonWrapper';
+import TextWrapper from '../forms/TextWrapper';
+import ButtonWrapper from '../forms/ButtonWrapper';
 // import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
 // import { login } from '../../redux/userSlice';
