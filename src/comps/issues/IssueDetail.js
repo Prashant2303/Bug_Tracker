@@ -4,48 +4,32 @@ import { Link } from 'react-router-dom';
 import { Container, Button, Grid } from '@material-ui/core'
 
 const IssueDetail = () => {
-    
+
     const issue = useLocation().state;
-    console.log('In Details '+JSON.stringify(issue))
-    const style = {fontWeight:'bold'}
-    return(
-        
+
+    const Field = (key, value) => (
+        <Grid item xs={12}>
+            <span style={{ fontWeight: 'bold' }}>{key}: </span>{value}<br />
+        </Grid>
+    )
+    return (
         <Container>
             <Grid spacing={2} container>
                 <Grid item xs={12} >
-                    <h1 style={{fontWeight:'normal', color:'darkgray'}}>Issue Details</h1>
+                    <h1 style={{ fontWeight: 'normal', color: 'darkgray' }}>Issue Details</h1>
                 </Grid>
-
+                {Field('Id', issue.id)}
+                {Field('Title', issue.title)}
+                {Field('Description', issue.desc)}
+                {Field('Severity', issue.severity)}
+                {Field('Status', issue.status)}
+                {Field('Creator', issue.creatorName)}
+                {Field('Created On', issue.cdate)}
+                {Field('Resolved On', issue.status === 'Closed' ? issue.rdate : 'Not yet resolved')}
+                {Field('Viewed', issue.viewed)}
                 <Grid item xs={12}>
-                    <span style={style}>Id: </span>{issue.id}<br/>
+                    <Button variant='outlined' size='small'><Link to='/issues' style={{ textDecoration: 'none' }}>Back</Link></Button>
                 </Grid>
-
-                <Grid item xs={12}>
-                    <span style={style}>Description: </span>{issue.desc}<br/>
-                </Grid>
-                <Grid item xs={12}>
-                    <span style={style}>Severity: </span>{issue.severity}<br/>
-                </Grid>
-                <Grid item xs={12}>
-                    <span style={style}>Status: </span>{issue.status}<br/>
-                </Grid>
-                <Grid item xs={12}>
-                    <span style={style}>Creation Date: </span>{issue.cdate}<br/>
-                </Grid>
-                {
-                    issue.status==='Closed'?
-                    <Grid item xs={12}>
-                        <span style={style}>Closing Date: </span>{issue.rdate}<br/>
-                    </Grid>:null
-                }
-                <Grid item xs={12}>
-                    <span style={style}>Viewed: </span>{issue.viewed} times<br/>
-                </Grid>
-                <Grid item xs={12}>
-                    <Button variant='outlined' size='small'><Link to='/issues' style={{textDecoration:'none'}}>Back</Link></Button>
-                </Grid>
-
-            {/* <h4 style={{ fontWeight:'' }} >This application is used to track the status of the issues raised.</h4> */}
             </Grid>
         </Container>
     )

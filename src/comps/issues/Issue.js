@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Card, CardContent, Typography, Grid, IconButton, CardActions, CardHeader } from '@material-ui/core';
 import { delIssueThunk, updateViewCountThunk } from '../../redux/issueSlice';
 import { useDispatch, useSelector } from 'react-redux'
-import { DeleteForeverRounded, EditRounded, LaunchRounded } from '@material-ui/icons';
+import { DeleteForeverRounded, EditRounded, Description } from '@material-ui/icons';
 import toast from 'react-hot-toast';
 import Loading from '../Loading';
 import { unwrapResult } from '@reduxjs/toolkit'
@@ -32,7 +32,7 @@ const Issue = ({ issue, displayProps }) => {
 
     const isLoggedIn = useSelector(state => state.user.loginStatus);
     const currentUser = useSelector(state => state.user.authData);
-    
+
     const classes = useStyles();
     const dispatch = useDispatch();
     const [loading, setLoading] = useState(false);
@@ -65,7 +65,7 @@ const Issue = ({ issue, displayProps }) => {
     const handleDetails = (e) => {
         if (isLoggedIn === false) {
             e.preventDefault();
-            loginRequiredToast();
+            loginRequiredToast('Login required');
         }
         else
             updateViewCount(issue);
@@ -74,7 +74,7 @@ const Issue = ({ issue, displayProps }) => {
     const handleEdit = (e) => {
         if (isLoggedIn === false) {
             e.preventDefault();
-            loginRequiredToast();
+            loginRequiredToast('Login required');
         }
     }
 
@@ -110,7 +110,7 @@ const Issue = ({ issue, displayProps }) => {
 
                         <IconButton aria-label="Details">
                             <Link to={{ pathname: '/issueDetails', state: issue }} onClick={handleDetails}>
-                                <LaunchRounded color={isLoggedIn ? 'primary' : 'disabled'} />
+                                <Description color={isLoggedIn ? 'primary' : 'disabled'} />
                             </Link>
                         </IconButton>
 
